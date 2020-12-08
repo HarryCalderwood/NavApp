@@ -1,29 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { render } from 'react-dom';
-import { StyleSheet, Text, View } from 'react-native';
-import {createStackNavigator, createAppContainer} from "react-navigation";
-import Home from './screens/Home';
-import Brief from './screens/Home';
+// In App.js in a new project
 
+import * as React from 'react';
+import { View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const MainNavigator = createStackNavigator({
-  Home: {screen: Home}
-  Brief: {screen: Brief}
-}, {
-  defaultNavigationOptions: {
-    headerTintColor: "#fff",
-    headerStyle: {
-      backgroundColor: "#000000"
-    },
-    headerTitleStyle: {
-      color: "#FFF"
-    }
-  }
-});
+function HomeScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+    </View>
+  );
+}
 
+function Briefing() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Briefing Screen</Text>
+    </View>
+  );
+}
 
-const App = createAppContainer(MainNavigator);
+const Stack = createStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} options={{title: 'Map'}} />
+        <Stack.Screen name="Briefing" component={Briefing} options={{title: 'Task Information'}}/>      
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
 export default App;
-
-
