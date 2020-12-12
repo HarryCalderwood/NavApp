@@ -1,14 +1,14 @@
 import React from 'react'
 import {View, Text, StyleSheet} from "react-native";
-const Home = (props) => {
+const Briefing = (props) => {
     return(
         <View style={styles.container}>
-            <Text>Home</Text>
+            <Text>Briefing</Text>
         </View>
     );
 };
 
-export default Home;
+export default Briefing;
 
 const styles = StyleSheet.create({
     container: {

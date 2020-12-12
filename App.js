@@ -1,41 +1,19 @@
-// In App.js in a new project
+import React from "react";
+import {createStackNavigator} from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import * as Screens from './screens/index';
+const {Screen, Navigator} = createStackNavigator();
 
-import * as React from 'react';
-import { View, Text, Button } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+const App = (props) => (
+<NavigationContainer>
+  <Navigator screenOptions = {{headerShown: false,}}>
+    <Screen name = "Login" component={Screens.Login}/>
+    <Screen name = "Home" component={Screens.Home}/>
+    <Screen name = "Briefing" component={Screens.Briefing}/>
+  </Navigator>
+</NavigationContainer>
+);
 
-function HomeScreen({navigation}) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Briefing "
-        onPress={() => navigation.navigate('Briefing')}
-      />
-    </View>
-  );
-}
 
-function Briefing() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Briefing Screen</Text>
-    </View>
-  );
-}
-
-const Stack = createStackNavigator();
-
-function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} options={{title: 'Map'}} />
-        <Stack.Screen name="Briefing" component={Briefing} options={{title: 'Task Information'}}/>      
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
 
 export default App;
