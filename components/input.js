@@ -1,11 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet, Dimensions} from "react-native";
+import {View, Text, StyleSheet, TextInput, Dimensions} from "react-native";
+const {width} = Dimensions.get("screen");
 
-import * as Componets from "../components/index";
+
 
 const Input = (props) => (    
 <View style={{marginVertical: 20, alignItems: "center"}}>
-            <TextInput style = {styles.input} placeholder = {"props.placeholder"}/>
+            <TextInput style = {styles.input} placeholder = {props.placeholder}/>
             </View>
 );
 

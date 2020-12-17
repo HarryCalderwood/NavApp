@@ -1,15 +1,15 @@
-import React from 'react'
+import { SettingsInputComponentSharp } from '@material-ui/icons';
+import React, { Component } from 'react'
 import {View, Text, StyleSheet} from "react-native";
 import { TextInput } from 'react-native-gesture-handler';
+import * as Components from "../components/index";
 
 const Login = (props) => {
     return(
         <View style={styles.container}>
             <Text>Login Screen</Text>
-            <View style={{marginVertical: 20}}>
-            <TextInput style = {styles.input} placeholder = "Username"/>
-            <TextInput style = {styles.input} placeholder = "Password"/>
-            </View>
+            <Components.Input placeholder = "Username"/>
+            <Components.Button text = "Enter"/>
         </View>
     );
 };
