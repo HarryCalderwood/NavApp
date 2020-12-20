@@ -1,8 +1,7 @@
-import { SettingsInputComponentSharp } from '@material-ui/icons';
 import React, { Component } from 'react'
 import {View, Text, StyleSheet} from "react-native";
-import { TextInput } from 'react-native-gesture-handler';
 import * as Components from "../components/index";
+import {connect} from 'react-redux'
 
 const Login = (props) => {
     return(
@@ -13,6 +12,13 @@ const Login = (props) => {
         </View>
     );
 };
+
+const mapStateToProps = (state) => ({user: state.user});
+
+const mapDispatchToProps = (dispatch) => ({
+    addUser: (username) => dispatch({type:ActionTypes.ADD_USER})
+})
+
 
 export default Login;
 
