@@ -1,0 +1,30 @@
+{/*children={createHomeStack}/*} - to replace Home component in App.js Drawer Navigator.
+
+            
+            //Buttons within Home.js. 
+            <Button
+                title='Go to Feed Item'
+                onPress={() => this.props.navigation.navigate('Detail', {screenName: "My Detail Screen"})}
+                />  
+                  <Button
+                title='Map'
+                onPress={() => this.props.navigation.navigate('Settings', {screenName: "Settings"})}
+                />  
+                   <Button
+                title='Briefing'
+                onPress={() => this.props.navigation.navigate('Briefing', {screenName: "Briefing"})}
+                />     
+
+
+ "config": {
+          "googleMaps": {
+            "apiKey": ""
+          }
+        }
+
+             "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"   
+      },   
+      
+               <Text style={styles.title}>Desk Officer App</Text>

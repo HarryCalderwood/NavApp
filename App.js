@@ -1,10 +1,14 @@
 import React,  {Component} from 'react';
-import Feed from './src/feed';
+import Home from './src/home';
 import Detail from './src/detail';
 
+import {Icon} from '@expo/vector-icons/Octicons';
+
 import Login from './src/screens/drawer/login';
-import Maps from './src/screens/drawer/maps';
 import Briefing from './src/screens/drawer/briefing';
+import Settings from './src/screens/drawer/settings';
+import Logout from './src/screens/drawer/logout';
+
 
 import Tab1 from './src/screens/tabs/tab1';
 import Tab2 from './src/screens/tabs/tab2';
@@ -20,21 +24,31 @@ const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 const MaterialBottomTabs = createMaterialBottomTabNavigator();
 const MaterialTopTabs = createMaterialTopTabNavigator();
+const MenuIcon = ({ navigate }) => <Icon 
+name='three-bars' 
+size={30} 
+color='#000' 
+onPress={() => navigate('DrawerOpen')}
+/>;
+
+const Nav= {
+    FirstView: {
+        screen: Login,
+        navigationOptions: ({ Drawer }) => ({
+            headerRight: MenuIcon(Drawer)
+        })
+    }
+};
+
 
 export default class App extends Component {
 
-
-
-
-
-
     render() {       
-
         createHomeStack = () =>
         <Stack.Navigator>
             <Stack.Screen 
-            name ="Feed" 
-            component= {Feed} 
+            name ="Home" 
+            component= {Home} 
             options={{
                 title: "Desk Officer",
                 headerStyle: {backgroundColor: "black"},
@@ -50,10 +64,10 @@ export default class App extends Component {
                 headerTintColor: "white"
             }}/>
               <Stack.Screen 
-            name ="Maps" 
-            component= {Maps} 
+            name ="Settings" 
+            component= {Settings} 
             options={{
-                title: "Map",
+                title: "Settings",
                 headerStyle: {backgroundColor: "black"},
                 headerTintColor: "white"
             }}/>
@@ -92,22 +106,26 @@ export default class App extends Component {
     
 
         return (
+            
             <NavigationContainer>
-                <Drawer.Navigator>
-                    <Drawer.Screen name="Home" children={createHomeStack}/>
-                    <Drawer.Screen name="Login" component={Login}/>
-                    <Drawer.Screen 
-                    name="Maps" 
-                    component={Maps}
-                    options={{
-                        title: "Map",
-                        headerStyle: {backgroundColor: "black"},
-                        headerTintColor: "white"
-                    }}
-                    />
+                <Drawer.Navigator drawerStyle={{
+                     backgroundColor: 'black',
+                     width: 200,
+                }} drawerContentOptions={{
+                    activeTintColor: '#D2D2D2',
+                    inactiveTintColor: 'white',
+                    itemStyle: { marginVertical: 5 },
+                  }}
+                  
+                 >
+                    
+                    <Drawer.Screen name="Home" component={Home}/> 
                     <Drawer.Screen name="Briefing" component={Briefing}/>
+                    <Drawer.Screen name="Settings" component={Settings}/>
+                    <Drawer.Screen name="Logout" component={Logout}/>
                 </Drawer.Navigator>
             </NavigationContainer>
+           
         );
     }
 }
