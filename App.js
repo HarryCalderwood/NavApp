@@ -2,12 +2,14 @@ import React,  {Component} from 'react';
 import Home from './src/home';
 import Detail from './src/detail';
 
-import {Icon} from '@expo/vector-icons/Octicons';
+
 
 import Login from './src/screens/drawer/login';
 import Briefing from './src/screens/drawer/briefing';
 import Settings from './src/screens/drawer/settings';
 import Logout from './src/screens/drawer/logout';
+
+
 
 
 import Tab1 from './src/screens/tabs/tab1';
@@ -24,26 +26,13 @@ const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 const MaterialBottomTabs = createMaterialBottomTabNavigator();
 const MaterialTopTabs = createMaterialTopTabNavigator();
-const MenuIcon = ({ navigate }) => <Icon 
-name='three-bars' 
-size={30} 
-color='#000' 
-onPress={() => navigate('DrawerOpen')}
-/>;
-
-const Nav= {
-    FirstView: {
-        screen: Login,
-        navigationOptions: ({ Drawer }) => ({
-            headerRight: MenuIcon(Drawer)
-        })
-    }
-};
 
 
-export default class App extends Component {
 
-    render() {       
+
+
+
+           
         createHomeStack = () =>
         <Stack.Navigator>
             <Stack.Screen 
@@ -98,17 +87,17 @@ export default class App extends Component {
     
         createBottomTabs = () => {
             return <MaterialBottomTabs.Navigator>
-                <MaterialBottomTabs.Screen name = "Tab 1" component= {Tab1}/>
-                <MaterialBottomTabs.Screen name = "Tab 2" component= {Tab2}/>
-                <MaterialBottomTabs.Screen name = "Tab 3" component= {Tab3}/>
+                <MaterialBottomTabs.Screen name = "Saved" component= {Home}/>
+                <MaterialBottomTabs.Screen name = "Commute" component= {Tab2}/>
+                <MaterialBottomTabs.Screen name = "Create new location" component= {Tab3}/>
                 </MaterialBottomTabs.Navigator>
         }
     
-
+        export default function App(){
         return (
-            
+          
             <NavigationContainer>
-                <Drawer.Navigator drawerStyle={{
+                <Drawer.Navigator initialRouteName = "Login" drawerStyle={{
                      backgroundColor: 'black',
                      width: 200,
                 }} drawerContentOptions={{
@@ -116,16 +105,16 @@ export default class App extends Component {
                     inactiveTintColor: 'white',
                     itemStyle: { marginVertical: 5 },
                   }}
-                  
                  >
-                    
-                    <Drawer.Screen name="Home" component={Home}/> 
+                    <Drawer.Screen name="Login" component={Login}/> 
+                    <Drawer.Screen name="Map" children={createBottomTabs}/> 
                     <Drawer.Screen name="Briefing" component={Briefing}/>
                     <Drawer.Screen name="Settings" component={Settings}/>
                     <Drawer.Screen name="Logout" component={Logout}/>
-                </Drawer.Navigator>
+                    </Drawer.Navigator>
             </NavigationContainer>
            
         );
     }
-}
+
+
