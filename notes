@@ -15,6 +15,13 @@
                 onPress={() => this.props.navigation.navigate('Briefing', {screenName: "Briefing"})}
                 />     
 
+<MaterialBottomTabs.Navigator>
+                <MaterialBottomTabs.Screen name = "Saved" component= {Home}/>
+                <MaterialBottomTabs.Screen name = "Commute" component= {Home}/>
+                <MaterialBottomTabs.Screen name = "Create new location" component= {Home}/>
+                <MaterialBottomTabs.Screen name = "Settings" component= {Settings}/>
+                <MaterialBottomTabs.Screen name = "Briefing" component= {Briefing}/>
+                </MaterialBottomTabs.Navigator>
 
  "config": {
           "googleMaps": {
@@ -28,3 +35,93 @@
       },   
       
                <Text style={styles.title}>Desk Officer App</Text>
+
+
+Drawer Navigator Code base:
+
+App.js: 
+<Drawer.Navigator drawerStyle={{
+                     backgroundColor: 'black',
+                     width: 200,
+                }} drawerContentOptions={{
+                    activeTintColor: '#D2D2D2',
+                    inactiveTintColor: 'white',
+                    itemStyle: { marginVertical: 5 },
+                  }}
+                  
+                 >
+                    <Drawer.Screen name="Login" children={createLoginStack}/> 
+                    <Drawer.Screen name="Map" children={createBottomTabs}/> 
+                    <Drawer.Screen name="Briefing" component={Briefing}/>
+                    <Drawer.Screen name="Settings" component={Settings}/>
+                    <Drawer.Screen name="Logout" component={Logout}/>
+                    </Drawer.Navigator>
+
+
+  createLoginStack = () =>
+        <Stack.Navigator>
+            <Stack.Screen
+            name ="Login" 
+            component= {Login}/>
+             <Stack.Screen
+            name ="Home" 
+            children={createBottomTabs}
+            />
+             <Stack.Screen 
+            name ="Settings" 
+            component= {Settings} 
+            options={{
+                title: "Settings",
+                headerStyle: {backgroundColor: "black"},
+                headerTintColor: "white"
+            }}/>
+
+        </Stack.Navigator>
+
+
+
+        <Stack.Navigator>
+            <Stack.Screen 
+            name ="Login" 
+            component= {Login} 
+            options={{
+                title: "Desk Officer App",
+                headerStyle: {backgroundColor: "black"},
+                headerTintColor: "white"
+            }}
+            />
+            <Stack.Screen 
+            name ="Home" 
+            component= {createBottomTabs} 
+            options={{
+                title: "Map",
+                headerStyle: {backgroundColor: "black"},
+                headerTintColor: "white"
+            }}/>
+              <Stack.Screen 
+            name ="Settings" 
+            component= {Settings} 
+            options={{
+                title: "Settings",
+                headerStyle: {backgroundColor: "black"},
+                headerTintColor: "white"
+            }}/>
+              <Stack.Screen 
+            name ="Briefing" 
+            component= {Briefing} 
+            options={{
+                title: "Briefing",
+                headerStyle: {backgroundColor: "black"},
+                headerTintColor: "white"
+            }}/>
+
+            <Stack.Screen name ="Bottom Tabs" children= {createBottomTabs} />
+            <Stack.Screen name ="Top Tabs" children= {createTopTabs} />
+        </Stack.Navigator> 
+
+         initialRegion={{
+            latitude: 	54.583116,
+            longitude: 	-5.786278,
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.0121
+        }}

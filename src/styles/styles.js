@@ -1,5 +1,4 @@
 import {StyleSheet, Dimensions} from 'react-native'
-
 const height = Dimensions.get('window').height
 
 export const styles=StyleSheet.create({
@@ -11,6 +10,7 @@ center: {
 title: {
     fontSize:36,
     marginBottom: 16,
+   
 },
 inputView:{
     width:"100%",
@@ -24,14 +24,22 @@ inputView:{
 
   forgot:{
       marginTop: 60,
-    color:"black",
+    color:"grey",
     fontSize:20
   },
 
   inputText:{
     height:50,
     fontSize: 20,
-    color:"black"
+    color:"black",
+    borderColor: 'black',
+    marginBottom: 25,
+    paddingLeft: 5,
+    paddingRight: 5,
+    borderWidth: 1,
+    borderColor: "grey",
+    width: 250,
+    height: 40,
   },
 
   loginBtn:{
@@ -41,12 +49,16 @@ inputView:{
     height:50,
     alignItems:"center",
     justifyContent:"center",
-    marginTop:80,
+    marginTop:50,
     marginBottom:10
   },
   loginText :{
       color: "white"
-
+  },
+  body:{
+    fontSize:20,
+    marginBottom: 5,
+    color: "grey"
   }
 
 

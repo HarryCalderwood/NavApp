@@ -1,20 +1,20 @@
 import React,  {Component} from 'react';
 import Home from './src/home';
 import Detail from './src/detail';
-
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 
 import Login from './src/screens/drawer/login';
 import Briefing from './src/screens/drawer/briefing';
 import Settings from './src/screens/drawer/settings';
 import Logout from './src/screens/drawer/logout';
-
+import { View, Text, TouchableOpacity } from 'react-native';
 
 
 
 import Tab1 from './src/screens/tabs/tab1';
 import Tab2 from './src/screens/tabs/tab2';
-import tab3 from './src/screens/tabs/tab3';
+import Tab3 from './src/screens/tabs/tab3';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -27,12 +27,7 @@ const Stack = createStackNavigator();
 const MaterialBottomTabs = createMaterialBottomTabNavigator();
 const MaterialTopTabs = createMaterialTopTabNavigator();
 
-
-
-
-
-
-           
+ 
         createHomeStack = () =>
         <Stack.Navigator>
             <Stack.Screen 
@@ -85,33 +80,96 @@ const MaterialTopTabs = createMaterialTopTabNavigator();
             </MaterialTopTabs.Navigator>
         }
     
-        createBottomTabs = () => {
-            return <MaterialBottomTabs.Navigator>
-                <MaterialBottomTabs.Screen name = "Saved" component= {Home}/>
-                <MaterialBottomTabs.Screen name = "Commute" component= {Tab2}/>
-                <MaterialBottomTabs.Screen name = "Create new location" component= {Tab3}/>
+        createBottomTabs = (props) => {
+            return (
+                <MaterialBottomTabs.Navigator
+                 initialRouteName="Home"
+                 activeColor="yellow"
+                 inactiveColor="white"
+                 shifting={false}
+                 barStyle={{ backgroundColor: 'black'}}
+                >
+                <MaterialBottomTabs.Screen 
+                name = "Home" 
+                component= {Home}
+                options={{
+                    tabBarLabel: 'Explore',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="map-marker" color={color} size={26} />
+                      )
+                }}
+                />
+                <MaterialBottomTabs.Screen 
+                name = "Commute"
+                component= {Home}
+                options={{
+                    tabBarLabel: 'Communte',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="map-marker-path" color={color} size={26} />
+                      )
+                }}
+                
+                />
+                <MaterialBottomTabs.Screen 
+                name = "New Location" 
+                component= {Home}
+                options={{
+                    tabBarLabel: 'Add location',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="plus-circle-outline" color={color} size={26} />
+                      )
+                }}
+                />
+                <MaterialBottomTabs.Screen 
+                name = "Briefing" 
+                component= {Briefing}
+                options={{
+                    tabBarLabel: 'Briefing',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="information-outline" color={color} size={26} />
+                      )
+                }}
+                />
+                <MaterialBottomTabs.Screen 
+                name = "Settings" 
+                component= {Settings}
+                options={{
+                    tabBarLabel: 'Settings',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="settings" color={color} size={26} />
+                      )
+                }}
+                
+                />
                 </MaterialBottomTabs.Navigator>
+            );
         }
     
         export default function App(){
         return (
           
             <NavigationContainer>
-                <Drawer.Navigator initialRouteName = "Login" drawerStyle={{
-                     backgroundColor: 'black',
-                     width: 200,
-                }} drawerContentOptions={{
-                    activeTintColor: '#D2D2D2',
-                    inactiveTintColor: 'white',
-                    itemStyle: { marginVertical: 5 },
-                  }}
-                 >
-                    <Drawer.Screen name="Login" component={Login}/> 
-                    <Drawer.Screen name="Map" children={createBottomTabs}/> 
-                    <Drawer.Screen name="Briefing" component={Briefing}/>
-                    <Drawer.Screen name="Settings" component={Settings}/>
-                    <Drawer.Screen name="Logout" component={Logout}/>
-                    </Drawer.Navigator>
+        <Stack.Navigator
+                screenOptions={{ headerShown: false }}>
+            <Stack.Screen 
+            name ="Login" 
+            component= {Login} 
+            options={{
+                title: "Desk Officer App",
+                headerStyle: {backgroundColor: "black"},
+                headerTintColor: "white"
+            }}
+            />
+            <Stack.Screen 
+            name ="Home" 
+            component= {createBottomTabs} 
+            options={{
+                title: "Map",
+                headerStyle: {backgroundColor: "black"},
+                headerTintColor: "white"
+            }}/>
+             
+        </Stack.Navigator> 
             </NavigationContainer>
            
         );
