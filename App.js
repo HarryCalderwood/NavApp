@@ -8,7 +8,6 @@ import Login from './src/screens/drawer/login';
 import Briefing from './src/screens/drawer/briefing';
 import Settings from './src/screens/drawer/settings';
 import Logout from './src/screens/drawer/logout';
-import { View, Text, TouchableOpacity } from 'react-native';
 
 
 
@@ -101,7 +100,7 @@ const MaterialTopTabs = createMaterialTopTabNavigator();
                 />
                 <MaterialBottomTabs.Screen 
                 name = "Commute"
-                component= {Home}
+                component= {Logout}
                 options={{
                     tabBarLabel: 'Communte',
                     tabBarIcon: ({ color }) => (
