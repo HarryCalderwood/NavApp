@@ -59,7 +59,46 @@ inputView:{
     fontSize:20,
     marginBottom: 5,
     color: "grey"
-  }
+  },
+  
+  map: {
+  ...StyleSheet.absoluteFillObject
+  
+    },
+
+ container: {
+height: Dimensions.get('screen').height
+ 
+ },
+ carousel: {
+
+  position: 'absolute',
+  bottom: 0, 
+  marginBottom: 40
+
+ },
+ cardContainer: {
+  backgroundColor: 'rgba(0,0,0,0.9)',
+  height: 200, 
+  width: 300, 
+  marginBottom: 100,
+  borderRadius: 24
+ },
+ cardTitle: {
+  color: 'white',
+  fontSize: 22, 
+  alignSelf: 'center'
+ },
+
+cardImage: {
+  height: 170,
+  width: 300,
+  bottom: 0, 
+  position: 'absolute',
+  borderBottomLeftRadius: 24,
+  borderBottomRightRadius:24
+  
+}
 
 
 

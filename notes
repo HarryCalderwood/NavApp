@@ -145,3 +145,184 @@ App.js:
 
 
 
+  region={region}
+        onRegionChangeComplete={region => setRegion(region)}
+
+
+
+        
+    const getDirections = async (startLoc, destinationLoc) => {
+        try {
+          const KEY = "AIzaSyAW9tExu5mTcWMUMMNMoNJ1L8snwp0nHGw";
+          let resp = await fetch(
+            `https://maps.googleapis.com/maps/api/directions/json?origin=${startLoc}&destination=${destinationLoc}&key=${KEY}`
+          );
+          let respJson = await resp.json();
+          let points = decode(respJson.routes[0].overview_polyline.points);
+          console.log(points);
+          let coords = points.map((point, index) => {
+            return {
+              latitude: point[0],
+              longitude: point[1]
+            };
+          });
+          return coords;
+        } catch (error) {
+          return error;
+        }
+      };
+
+
+          const [region, setRegion] = useState({
+        latitude: 51.5079145,
+        longitude: -0.0899163,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01
+      });
+
+    const [coords, setCoords] = useState([]);
+    
+    useEffect(() => {
+        getDirections("52.5200066,13.404954", "50.1109221,8.6821267")
+          .then(coords => setCoords(coords))
+          .catch(err => console.log("Something went wrong"));
+      }, []);
+    
+    
+    return (
+       
+      <MapView
+        provider={PROVIDER_GOOGLE}
+        style={styles.map}
+        showsUserLocation
+        followsUserLocation  
+        >
+        
+            <Marker coordinate={{ latitude: 51.5078788, longitude: -0.0877321 }} 
+            pinColor="black"
+            />
+             {coords.length > 0 && <Polyline coordinates={coords} />}
+            </MapView>
+    )
+}
+
+
+const styles = StyleSheet.create ({
+    map: {
+     height  
+    }
+})
+
+
+{coords.length > 0 && <Polyline coordinates={coords} />}
+
+
+
+   region={region}
+        onRegionChangeComplete={region => setRegion(region)}
+
+
+            const getDirections = async (startLoc, destinationLoc) => {
+        try {
+          const KEY = "AIzaSyAW9tExu5mTcWMUMMNMoNJ1L8snwp0nHGw";
+          let resp = await fetch(
+            `https://maps.googleapis.com/maps/api/directions/json?origin=${startLoc}&destination=${destinationLoc}&key=${KEY}`
+          );
+          let respJson = await resp.json();
+          let points = decode(respJson.routes[0].overview_polyline.points);
+          console.log(points);
+          let coords = points.map((point, index) => {
+            return {
+              latitude: point[0],
+              longitude: point[1]
+            };
+          });
+          return coords;
+        } catch (error) {
+          return error;
+        }
+      };
+
+
+          const [region, setRegion] = useState({
+        latitude: 51.5079145,
+        longitude: -0.0899163,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01
+      });
+
+    const [coords, setCoords] = useState([]);
+    
+    useEffect(() => {
+        getDirections("52.5200066,13.404954", "50.1109221,8.6821267")
+          .then(coords => setCoords(coords))
+          .catch(err => console.log("Something went wrong"));
+      }, []);
+    
+
+--------------------------------------------
+    
+  locateCurrentLocation = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        console.log(JSON.stringify(position));
+      }
+    )
+  }
+
+    state = {
+    location: {},
+    errorMessage: ''
+  };
+
+
+  
+componentWillMount() {
+  this._getLocation();
+}
+  _getLocation = async () => {
+    const {status} = await Permissions.askAsync(Permissions.LOCATION);
+
+    if(status !== 'granted') {
+      console.log('PERMISSION NOT GRANTED!');
+
+      this.setState({
+        errorMessage: 'PERMISSION NOT GRANTED'
+
+      })
+    }
+
+    const location = await Location.getCurrentPositionAsync();
+
+    this.setState ({
+      location
+    })
+  }
+
+
+
+  async componentDidMount () {
+    const {status} = await Permissions.getAsync(Permissions.LOCATION)
+    
+    if(status!== 'granted'){
+      const response = await Permissions.askAsync(Permissions.LOCATION)
+    }  
+    navigator.geoloaction.getCurrentPosition(
+
+    ({coords: {userLatitude, userLongitude} }) => this.setState([userLatitude, userLongitude]),
+    (error) => console.log('Error:', error)
+      )
+    
+  }
+
+
+
+
+  render() {
+    const {userLatitude, userLongitude } = this.state
+
+  userLatitude: {},
+        userLongitude: {}
+
+
+

@@ -3,7 +3,7 @@ import {View, Text,TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-navigation';
 import {styles} from '../../styles/styles'
 import {FontAwesome5} from "@expo/vector-icons";
-
+import sectionList from '../../components/index';
 export default class Settings extends React.Component {
     render() {
 return(
@@ -23,6 +23,7 @@ return(
     <View style= {styles.center}>
         
         <Text style={styles.title}>Settings</Text>
+        <sectionList/>
         </View>
             </SafeAreaView>
    
