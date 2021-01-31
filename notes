@@ -326,3 +326,29 @@ componentWillMount() {
 
 
 
+      <MapView.Marker
+          draggable
+          title="Belfast City Hall"
+          description="Historic meeting place. Over 200 year old building."
+          coordinate={{
+            latitude: 54.59658111383503,
+            longitude: -5.929401353654955
+          }}>
+
+            
+        </MapView.Marker>
+
+
+
+
+
+        <Carousel
+        ref={(c) => { this._carousel = c; }}
+        data={this.state.coordinates}
+        containerCustomStyle={styles.carousel}
+        renderItem={this.renderCarouselItem}
+        sliderWidth={Dimensions.get('window').width}
+        itemWidth={300}
+        itemHeight={200}
+        onSnapToItem={(index) => this.onCarouselItemChange(index)}
+      />

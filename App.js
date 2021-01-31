@@ -1,73 +1,35 @@
 import React, { Component } from 'react';
-import Home from './src/home';
-import Detail from './src/detail';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
-import Areas from './src/components/mapOverlays';
-import Login from './src/screens/drawer/login';
-import Briefing from './src/screens/drawer/briefing';
-import Settings from './src/screens/drawer/settings';
-import Logout from './src/screens/drawer/logout';
+import Home from './src/screens/stack/home';
+import Areas from './src/screens/bottomTabs/mapOverlays';
+import Login from './src/screens/stack/login';
+import Briefing from './src/screens/bottomTabs/briefing';
+import Settings from './src/screens/bottomTabs/settings';
+import Logout from './src/screens/stack/logout';
 
+import Tab1 from './src/screens/topTabs/tab1';
+import Tab2 from './src/screens/topTabs/tab2';
 
-
-import Tab1 from './src/screens/tabs/tab1';
-import Tab2 from './src/screens/tabs/tab2';
-import Tab3 from './src/screens/tabs/tab3';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-const Drawer = createDrawerNavigator();
+
 const Stack = createStackNavigator();
 const MaterialBottomTabs = createMaterialBottomTabNavigator();
 const MaterialTopTabs = createMaterialTopTabNavigator();
 
+const reducer = () => {
+}
 
-createHomeStack = () =>
-    <Stack.Navigator>
-        <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{
-                title: "Desk Officer",
-                headerStyle: { backgroundColor: "black" },
-                headerTintColor: "white"
-            }}
-        />
-        <Stack.Screen
-            name="Detail"
-            component={Detail}
-            options={{
-                title: "Detail",
-                headerStyle: { backgroundColor: "black" },
-                headerTintColor: "white"
-            }} />
-        <Stack.Screen
-            name="Settings"
-            component={Settings}
-            options={{
-                title: "Settings",
-                headerStyle: { backgroundColor: "black" },
-                headerTintColor: "white"
-            }} />
-        <Stack.Screen
-            name="Briefing"
-            component={Briefing}
-            options={{
-                title: "Briefing",
-                headerStyle: { backgroundColor: "black" },
-                headerTintColor: "white"
-            }} />
+const store = createStore(reducer)
 
-        <Stack.Screen name="Bottom Tabs" children={createBottomTabs} />
-        <Stack.Screen name="Top Tabs" children={createTopTabs} />
-    </Stack.Navigator>
-
-createTopTabs = (props) => {
+const createTopTabs = (props) => {
     return <MaterialTopTabs.Navigator>
         <MaterialTopTabs.Screen
             name="Tab 1"
@@ -111,7 +73,7 @@ createBottomTabs = (props) => {
             />
             <MaterialBottomTabs.Screen
                 name="New Location"
-                component={Home}
+                component={Settings}
                 options={{
                     tabBarLabel: 'Add location',
                     tabBarIcon: ({ color }) => (
@@ -146,7 +108,6 @@ createBottomTabs = (props) => {
 
 export default function App() {
     return (
-
         <NavigationContainer>
             <Stack.Navigator
                 screenOptions={{ headerShown: false }}>
@@ -167,11 +128,7 @@ export default function App() {
                         headerStyle: { backgroundColor: "black" },
                         headerTintColor: "white"
                     }} />
-
             </Stack.Navigator>
         </NavigationContainer>
-
     );
 }
-
-
