@@ -37,7 +37,8 @@ const Map = () => {
         provider={PROVIDER_GOOGLE}
         ref={map => this._map = map}
         style={styles.map}
-        showsUserLocation={true}
+        showsUserLocation
+        followsUserLocation
       >
 
         {

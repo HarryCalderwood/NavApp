@@ -1,6 +1,11 @@
+import { Row } from 'native-base';
 import { StyleSheet, Dimensions } from 'react-native'
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 export const styles = StyleSheet.create({
+  
+  //Login screen styles
   center: {
     flex: 1,
     justifyContent: 'center',
@@ -56,18 +61,25 @@ export const styles = StyleSheet.create({
     color: "white"
   },
 
-  body: {
-    fontSize: 20,
-    marginBottom: 5,
-    color: "grey"
-  },
+
+//Multi component styles
+
+body: {
+  fontSize: 20,
+  marginBottom: 5,
+  color: "grey"
+},
+
+container: {
+  height: windowHeight,
+},
+
+
+//map tab styles
+ 
 
   map: {
     ...StyleSheet.absoluteFillObject
-  },
-
-  container: {
-    height: Dimensions.get('screen').height
   },
 
   carousel: {
@@ -105,48 +117,37 @@ export const styles = StyleSheet.create({
     borderBottomRightRadius: 24
   },
 
-  ipaText: {
-    fontSize: 20,
-    color: 'green'
 
+//mapOverlays tab styles
+ 
+  overlayMap: {
+  flex: 8,
+  height: windowHeight, 
+  width: windowWidth
+},
+
+  greenText: {
+    fontSize: 30,
+    color: 'green', 
   },
 
   boldText: {
     fontWeight: 'bold',
-    alignItems: 'center'
+    fontSize: 40
   },
 
-  stoutText: {
-    fontSize: 20,
-    color: 'blue'
+  blueText: {
+    fontSize: 30,
+    color: 'blue', 
   },
 
   labelContainer: {
-   
-
-    
-   
-    backgroundColor: 'rgba(0,0,0,0.9)',
-    height: 200,
-    width: 300,
-    marginBottom: 100,
-    borderRadius: 24,
+    marginTop: 40,
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    paddingTop: 20
   },
    
   calloutContainer: {
-    bottom: 0,
-    marginBottom: 40,
-    
-
-
 
   }
   
-
-
-
 });

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, SafeAreaView, Text, Dimensions, StyleSheet } from 'react-native';
+import { View, SafeAreaView, Text, Button } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { fromJS } from 'immutable';
 import { styles } from '../../styles/styles';
@@ -12,7 +12,8 @@ const greenZone = {
     { name: 'Point 4', latitude: 54.70785132594203, longitude: -6.723754731546966 },
   ],
   strokeColor: 'green',
-  strokeWidth: 4
+  strokeWidth: 4,
+  fillColor: '232, 252, 227'
 };
 
 const unitedNations = {
@@ -23,14 +24,14 @@ const unitedNations = {
   ],
   strokeColor: 'blue',
   strokeWidth: 4,
-  fillColor: '#99c2ff'
+  fillColor: '224, 246, 255'
 };
 
 export default class PlottingOverlays extends Component {
   state = {
     data: fromJS({
-      ipaStyles: [styles.ipaText, styles.boldText],
-      stoutStyles: [styles.stoutText],
+      greenStyles: [styles.greenText, styles.boldText],
+      blueStyles: [styles.blueText],
       overlays: [greenZone]
     })
   };
@@ -42,43 +43,34 @@ export default class PlottingOverlays extends Component {
     this.setState({ data });
   }
 
-  onClickIpa = () => {
+  onClickGreen = () => {
     this.data = this.data
-
-      .update('ipaStyles', i => i.push(styles.boldText))
-
-      .update('stoutStyles', i => i.pop())
-
+      .update('greenStyles', i => i.push(styles.boldText))
+      .update('blueStyles', i => i.pop())
       .update('overlays', i => i.set(0, greenZone));
   };
 
 
-  onClickStout = () => {
+  onClickBlue = () => {
     this.data = this.data
-      .update('stoutStyles', i => i.push(styles.boldText))
-      .update('ipaStyles', i => i.pop())
+      .update('blueStyles', i => i.push(styles.boldText))
+      .update('greenStyles', i => i.pop())
       .update('overlays', i => i.set(0, unitedNations));
   };
 
   render() {
-    const { ipaStyles, stoutStyles, overlays } = this.data.toJS();
+    const { greenStyles, blueStyles, overlays } = this.data.toJS();
     return (
-
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
 
         <View style={styles.labelContainer}>
-          <Text style={ipaStyles} onPress={this.onClickIpa}>
-            Green Zone
-          </Text>
-          <Text style={stoutStyles} onPress={this.onClickStout}>
-            United Nations
-          </Text>
+          <Button color='green' title='Green Zone' style={greenStyles} onPress={this.onClickGreen} />
+          <Button color='blue' title='Blue Zone' style={blueStyles} onPress={this.onClickBlue} />
         </View>
 
         <MapView
-          style={styles.map}
+          style={styles.overlayMap}
           provider={PROVIDER_GOOGLE}
-          showsUserLocation={true}
         >
           {overlays.map((v, i) => (
             <MapView.Polygon
@@ -90,7 +82,7 @@ export default class PlottingOverlays extends Component {
             />
           ))}
         </MapView>
-      </View>
+      </SafeAreaView>
     );
   }
 }
