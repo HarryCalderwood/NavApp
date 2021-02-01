@@ -6,7 +6,7 @@ export default class Home extends React.Component {
     render() {
         return (
             <SafeAreaView forceInset={{ top: 'always' }}>
-                <Map/>
+                <Map />
             </SafeAreaView>
         );
     }

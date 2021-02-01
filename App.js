@@ -4,11 +4,13 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 import Home from './src/screens/stack/home';
-import Areas from './src/screens/bottomTabs/mapOverlays';
 import Login from './src/screens/stack/login';
+import Register from './src/screens/stack/register';
+import Logout from './src/screens/stack/logout';
+
+import Areas from './src/screens/bottomTabs/mapOverlays';
 import Briefing from './src/screens/bottomTabs/briefing';
 import Settings from './src/screens/bottomTabs/settings';
-import Logout from './src/screens/stack/logout';
 
 import Tab1 from './src/screens/topTabs/tab1';
 import Tab2 from './src/screens/topTabs/tab2';
@@ -115,11 +117,22 @@ export default function App() {
                     name="Login"
                     component={Login}
                     options={{
-                        title: "Desk Officer App",
+                      
+                        title: "Login",
                         headerStyle: { backgroundColor: "black" },
                         headerTintColor: "white"
                     }}
                 />
+                   <Stack.Screen
+                    name="Register"
+                    component={Register}
+                    options={{
+                        headerShown: true,
+                        title: "Login",
+                        headerStyle: { backgroundColor: "black" },
+                        headerTintColor: "white"
+                    }}/>
+
                 <Stack.Screen
                     name="Home"
                     component={createBottomTabs}
@@ -128,6 +141,7 @@ export default function App() {
                         headerStyle: { backgroundColor: "black" },
                         headerTintColor: "white"
                     }} />
+
             </Stack.Navigator>
         </NavigationContainer>
     );

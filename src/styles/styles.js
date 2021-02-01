@@ -8,28 +8,56 @@ export const styles = StyleSheet.create({
   //Login screen styles
   center: {
     flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  title: {
-    fontSize: 36,
-    marginBottom: 16,
 
+  
+
+  inputContainer: {
+    flex: 6,
+    width: '100%',
+    backgroundColor: "blue",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  inputView: {
-    width: "100%",
+
+  loginBtnContainer: {
+    flex: 2,
+    width: '100%',
     backgroundColor: "green",
-    borderRadius: 25,
-    height: 100,
-    marginBottom: 20,
-    justifyContent: "center",
-    padding: 20
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  titleContainer: {
+    flex: 2,
+    width: '100%',
+  backgroundColor: "grey",
+  justifyContent: 'center',
+  alignItems: 'center',
+  },
+
+  regBtnContainer: {
+    flex: 2,
+    width: '100%',
+    backgroundColor: "yellow",
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  
+
+  title: {
+    fontSize: 50,
+    marginBottom: 60,
+
   },
 
   forgot: {
-    marginTop: 60,
     color: "grey",
-    fontSize: 20
+    fontSize: 20,
+ 
   },
 
   inputText: {
@@ -37,43 +65,67 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     color: "black",
     borderColor: 'black',
-    marginBottom: 25,
-    paddingLeft: 5,
-    paddingRight: 5,
-    borderWidth: 1,
-    borderColor: "grey",
-    width: 250,
-    height: 40,
+    borderWidth: 2,
+    paddingLeft: 8,
+    borderColor: "black",
   },
 
   loginBtn: {
-    width: "25%",
+    
     backgroundColor: "black",
     borderRadius: 25,
-    height: 50,
+    height: '60%',
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 50,
-    marginBottom: 10
+    marginTop: 40
   },
 
-  loginText: {
-    color: "white"
+  regNewUserdBtn: {
+    width: "60%",
+    backgroundColor: "grey",
+    borderRadius: 25,
+    height: '35%',
+    justifyContent: "center",
+    marginTop: 40
   },
 
+  btnText: {
+    color: "white",
+    fontSize: 20
+  },
+
+  inputLabel: {
+    fontSize: 20,
+    marginBottom: 5,
+    color: "grey"
+  },
+  
+
+
+  
 
 //Multi component styles
-
-body: {
-  fontSize: 20,
-  marginBottom: 5,
-  color: "grey"
-},
-
 container: {
   height: windowHeight,
 },
 
+headerContainer: {
+  flex: 2,
+  width: '100%',
+  backgroundColor: "purple",
+  justifyContent: 'center',
+  alignItems: 'center',
+
+},
+
+footerContainer: {
+  flex: 2,
+  width: '100%',
+  backgroundColor: "pink",
+  justifyContent: 'center',
+  alignItems: 'center',
+
+},
 
 //map tab styles
  
