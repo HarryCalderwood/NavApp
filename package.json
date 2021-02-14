@@ -13,7 +13,7 @@
     "@material-ui/icons": "^4.11.2",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/masked-view": "^0.1.10",
-    "@react-native-firebase/app": "^10.4.0",
+    "@react-native-firebase/app": "^10.6.4",
     "@react-navigation/drawer": "^5.11.4",
     "@react-navigation/material-bottom-tabs": "^5.3.10",
     "@react-navigation/material-top-tabs": "^5.3.10",
@@ -25,6 +25,9 @@
     "expo-location": "~9.0.0",
     "expo-permissions": "~9.3.0",
     "expo-status-bar": "~1.0.2",
+    "firebase": "7.9.0",
+    "firebase-admin": "^9.4.2",
+    "firebase-functions": "^3.13.1",
     "fontsource-roboto": "^4.0.0",
     "immutable": "^4.0.0-rc.12",
     "install": "^0.13.0",
@@ -37,17 +40,25 @@
     "react-native-elements": "^3.1.0",
     "react-native-gesture-handler": "^1.7.0",
     "react-native-maps": "^0.27.1",
+    "react-native-modal": "^11.6.1",
     "react-native-paper": "^4.6.0",
     "react-native-permissions": "^3.0.0",
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.4",
     "react-native-screens": "^2.10.1",
+    "react-native-size-matters": "^0.4.0",
     "react-native-snap-carousel": "^3.9.1",
+    "react-native-splash-screen": "^3.2.0",
     "react-native-tab-view": "^2.15.2",
     "react-native-web": "~0.13.12",
     "react-navigation": "^4.4.3",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5"
+  },
+  "rnpm": {
+    "assets": [
+      "fonts"
+    ]
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

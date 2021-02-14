@@ -352,3 +352,155 @@ componentWillMount() {
         itemHeight={200}
         onSnapToItem={(index) => this.onCarouselItemChange(index)}
       />
+
+      Tab navigator styling:
+
+        activeColor="yellow"
+            inactiveColor="white"
+            shifting={false}
+            barStyle={{ backgroundColor: 'black' }}
+
+
+             admin.initializeApp({
+    credential: admin.credential.applicationDefault(),
+    databaseURL: 'https://<desk-officer>.firebaseio.com'
+  });
+
+    // Initialize the default app
+var admin = require('firebase-admin');
+var app = admin.initializeApp();
+
+
+ firebase.initializeApp(ApiKeys.FirebaseConfig);
+const dbh = firebase.firestore();
+
+  const userCollection = firestore().collection('user');
+
+  firebase.firestore().enablePersistence()
+  .catch((err) => {
+      if (err.code == 'failed-precondition') {
+          // Multiple tabs open, persistence can only be enabled
+          // in one tab at a a time.
+          // ...
+      } else if (err.code == 'unimplemented') {
+          // The current browser does not support all of the
+          // features required to enable persistence
+          // ...
+      }
+  });
+
+
+
+  
+
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+
+  // Handle user state changes
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
+  if (initializing) return null;
+
+  if (!user) {
+    return (
+      <View>
+        <Text>Login</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View>
+      <Text>Welcome {user.email}</Text>
+    </View>
+  );
+
+
+import { firestore } from 'firebase-admin';
+import * as firebase from 'firebase';
+import auth from '@react-native-firebase/auth';
+
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
+
+
+const firebaseConfig = {
+     
+    apiKey: "AIzaSyA3eI1wlFWTri8gBkg4LrJpnUny7_wwi7c",
+    authDomain: "desk-officer.firebaseapp.com",
+    databaseURL: "https://desk-officer-default-rtdb.firebaseio.com",
+    projectId: "desk-officer",
+    storageBucket: "desk-officer.appspot.com",
+    messagingSenderId: "615037685218",
+    appId: "1:615037685218:web:e90406ffa14b6d8a6ffdbb",
+    measurementId: "G-XJ4P0TJKFW"
+    }    
+
+    if(firebase.apps.length ==0) {    
+firebase.initalizeApp(firebaseConfig)
+}
+
+LogBox.ignoreLogs(['Settign a times for a long period of time'])
+
+
+//card
+   <Card>
+      <Card.Title title="Card Title" subtitle="Card Subtitle" left={LeftContent} />
+      <Card.Content>
+        <Title>Card title</Title>
+        <Paragraph>Card content</Paragraph>
+      </Card.Content>
+      <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+      <Card.Actions>
+        <Button>Cancel</Button>
+        <Button>Ok</Button>
+      </Card.Actions>
+    </Card>
+
+    //Carousel
+
+    <Carousel
+        ref={(c) => { this._carousel = c; }}
+        data={this.state.coordinates}
+        containerCustomStyle={styles.carousel}
+        renderItem={this.renderCarouselItem}
+        sliderWidth={Dimensions.get('window').width}
+        itemWidth={300}
+        itemHeight={200}
+        onSnapToItem={(index) => this.onCarouselItemChange(index)}
+      />
+
+      renderCarouselItem = ({ item }) =>
+    <View style={styles.cardContainer}>
+      <Text style={styles.cardTitle}>{item.name}</Text>
+      <Image style={styles.cardImage} source={item.image} />
+      <Text style={styles.cardText}>{item.text}</Text>
+    </View>
+
+
+            {
+          this.state.coordinates.map(marker => (
+  onCarouselItemChange = (index) => {
+    let location = this.state.coordinates[index];
+    this._map.animateToRegion({
+      latitude: location.latitude,
+      longitude: location.longitude,
+      latitudeDelta: 0.08,
+      longitudeDelta: 0.035
+    })
+  }
+
+
+  const [cardKey, setCardKey] = useState('1');
+
+const onMarkerPress = () => setCardKey(marker.key);
+
+                  this.setCardKey(marker.key)

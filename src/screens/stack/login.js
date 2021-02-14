@@ -1,77 +1,121 @@
-import React, { useState } from 'react';
-import { View, Text, Button, Keyboard, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Keyboard, TouchableOpacity, StatusBar, KeyboardAvoidingView, TouchableWithoutFeedback, ImageBackground } from 'react-native';
 import { styles } from '../../styles/styles'
+import MapModal from '../../components/modal';
+import * as Index from '../../components/index';
+import { Title, Text, Subheading, TextInput, Switch, Button, Headline } from 'react-native-paper';
+import { ScrollView } from 'react-native-gesture-handler';
+import { moderateScale } from 'react-native-size-matters';
 
 
 const Login = ({ navigation }) => {
 
-
   const [email, onChangeEmail] = React.useState('Username');
   const [password, onChangePassword] = React.useState('Password');
+  const [hidePassword, setHidePassword] = useState(false);
+  const onPasswordSwitch = () => setHidePassword(!hidePassword);
+
+  var bgImg = require('../../images/splashBackground.jpeg');
 
   return (
-    <View style={styles.center}>
 
-      <View style={styles.headerContainer}>
-      
-      </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Login</Text>
-      </View>
+        <View style={styles.center}>
 
-      <View style={styles.inputContainer}>
-      <Text style={styles.inputLabel}>Name</Text>
 
-      <TextInput
-        style={styles.inputText}
-        placeholder="Email"
-        placeholderTextColor="black"
-        onChangeText={text => onChangeEmail(text)}
-        email={email}
-        maxLength={320}
-        allowFontScaling={true}
-        blurOnSubmit={true}
-        textContentType={'emailAddress'}
+          <ImageBackground
+            source={bgImg}
+            style={styles.backgroundImage}
+          >
 
-      />
-      <Text style={styles.inputLabel}>Password:</Text>
 
-      <TextInput
-        style={styles.inputText}
-        secureTextEntry={true}
-        placeholder="Password"
-        placeholderTextColor="black"
-        onChangeText={password => onChangePassword(password)}
-        password={password}
-        maxLength={20}
-        allowFontScaling={true}
-        blurOnSubmit={true}
-        
-      />
-      </View>
+            <View style={styles.flex3Container}>
+              <Headline style={{ fontSize: 50, paddingTop: 80, fontWeight: 'bold' }}>Login</Headline>
+            </View>
 
-      <View style={styles.loginBtnContainer}>
-      <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Home')}>
-        <Text style={styles.btnText}>Login</Text>
-      </TouchableOpacity>
-      </View>
+            <View style={styles.flex2Container}>
 
-      <View style={styles.regBtnContainer}>
-      <TouchableOpacity style={styles.regNewUserdBtn} onPress={() => navigation.navigate('Register')}>
-        <Text style={styles.btnText}>Register New User</Text>
-      </TouchableOpacity>
+              <TextInput
+                mode="flat"
+                style={styles.textInput}
+                label="Email"
+                onChangeText={text => onChangeEmail(text)}
+                email={email}
+                textContentType={'emailAddress'}
+                maxLength={320}
+              />
+            </View>
 
-      <TouchableOpacity>
-        <Text style={styles.forgotPassword}>Forgot Password?</Text>
-      </TouchableOpacity>
-      </View>
 
-      
-      <View style={styles.footerContainer}>
-      
-      </View>
-    </View>
+            <View style={styles.flex2Container}>
+
+              <TextInput
+                mode="flat"
+                style={styles.textInput}
+                label="Password"
+                onChangeText={password => onChangePassword(password)}
+                password={password}
+                maxLength={20}
+                allowFontScaling={true}
+                blurOnSubmit={true}
+                secureTextEntry={hidePassword ? false : true}
+              />
+
+              <View style={styles.switchView}>
+                <Text allowFontScaling={true} style={{ marginTop: 8 }} >
+                  Show Password
+                </Text>
+                <Switch
+                  value={hidePassword}
+                  label="Show Password"
+                  onValueChange={onPasswordSwitch}
+                  style={{
+                    transform: [{ scaleX: moderateScale(0.6, 1) }, {
+                      scaleY:
+                        moderateScale(0.6, 1)
+                    }],
+                    marginTop: '0.6%'
+                  }}
+                ></Switch>
+
+
+              </View>
+            </View>
+
+
+            <View style={styles.flex1Container}>
+              <Button mode="contained" onPress={() => navigation.navigate('Map')}>
+                login
+          </Button>
+            </View>
+
+            <View style={styles.flex1Container}>
+              <Button mode="contained" onPress={() => navigation.navigate('Register')}>
+                Forgot Password?
+          </Button>
+            </View>
+
+            <View style={styles.flex1Container}>
+              <Button mode="contained" onPress={() => navigation.navigate('Register')}>
+                Register New User
+          </Button>
+            </View>
+
+
+            <View style={styles.footerContainer} />
+
+          </ImageBackground>
+
+        </View >
+
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView >
+
   );
-}
+};
 export default Login;

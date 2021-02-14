@@ -1,13 +1,18 @@
-import React, { Component } from 'react';
+//@refresh reset
+import React, { useState, Component, useEffect } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { LogBox } from 'react-native';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import SplashScreen from 'react-native-splash-screen';
 
-import Home from './src/screens/stack/home';
+import Splash from './src/screens/stack/splash';
 import Login from './src/screens/stack/login';
 import Register from './src/screens/stack/register';
 import Logout from './src/screens/stack/logout';
 
+import Map from './src/screens/bottomTabs/map';
 import Areas from './src/screens/bottomTabs/mapOverlays';
 import Briefing from './src/screens/bottomTabs/briefing';
 import Settings from './src/screens/bottomTabs/settings';
@@ -26,39 +31,57 @@ const Stack = createStackNavigator();
 const MaterialBottomTabs = createMaterialBottomTabNavigator();
 const MaterialTopTabs = createMaterialTopTabNavigator();
 
+
+
+const theme = {
+    ...DefaultTheme,
+    myOwnProperty: true,
+    colors: {
+        ...DefaultTheme.colors,
+        primary: 'black',
+        accent: 'black',
+    },
+};
+
+
 const reducer = () => {
 }
-
 const store = createStore(reducer)
+
+
+
+
+
 
 const createTopTabs = (props) => {
     return <MaterialTopTabs.Navigator>
         <MaterialTopTabs.Screen
             name="Tab 1"
             component={Tab1}
-            options={{ title: props.route.params.name }}
         />
         <MaterialTopTabs.Screen name="Tab 2" component={Tab2} />
-        <MaterialTopTabs.Screen name="Tab 3" component={Tab3} />
+
     </MaterialTopTabs.Navigator>
 }
 
+
+
 createBottomTabs = (props) => {
     return (
+
         <MaterialBottomTabs.Navigator
-            initialRouteName="Home"
-            activeColor="yellow"
-            inactiveColor="white"
-            shifting={false}
-            barStyle={{ backgroundColor: 'black' }}
+            initialRouteName="Map"
+            activeColor="#f0edf6"
+            inactiveColor="#3e2465"
+            barStyle={{ backgroundColor: '#EB4D4B' }}
         >
             <MaterialBottomTabs.Screen
-                name="Home"
-                component={Home}
+                name="Map"
+                component={Map}
                 options={{
                     tabBarLabel: 'Explore',
-                    tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons name="map-marker" color={color} size={26} />
+                    tabBarIcon: ({ theme }) => (
+                        <MaterialCommunityIcons name="map-marker" color={theme} size={26} />
                     )
                 }}
             />
@@ -67,29 +90,20 @@ createBottomTabs = (props) => {
                 component={Areas}
                 options={{
                     tabBarLabel: 'Areas',
-                    tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons name="map-marker-path" color={color} size={26} />
+                    tabBarIcon: ({ theme }) => (
+                        <MaterialCommunityIcons name="map-marker-path" color={theme} size={26} />
                     )
                 }}
 
             />
-            <MaterialBottomTabs.Screen
-                name="New Location"
-                component={Settings}
-                options={{
-                    tabBarLabel: 'Add location',
-                    tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons name="plus-circle-outline" color={color} size={26} />
-                    )
-                }}
-            />
+            
             <MaterialBottomTabs.Screen
                 name="Briefing"
                 component={Briefing}
                 options={{
                     tabBarLabel: 'Briefing',
-                    tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons name="information-outline" color={color} size={26} />
+                    tabBarIcon: ({ theme }) => (
+                        <MaterialCommunityIcons name="information-outline" color={theme} size={26} />
                     )
                 }}
             />
@@ -98,8 +112,8 @@ createBottomTabs = (props) => {
                 component={Settings}
                 options={{
                     tabBarLabel: 'Settings',
-                    tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons name="settings" color={color} size={26} />
+                    tabBarIcon: ({ theme }) => (
+                        <MaterialCommunityIcons name="settings" color={theme} size={26} />
                     )
                 }}
 
@@ -109,40 +123,56 @@ createBottomTabs = (props) => {
 }
 
 export default function App() {
+
+
     return (
-        <NavigationContainer>
-            <Stack.Navigator
-                screenOptions={{ headerShown: false }}>
-                <Stack.Screen
-                    name="Login"
-                    component={Login}
-                    options={{
-                      
-                        title: "Login",
-                        headerStyle: { backgroundColor: "black" },
-                        headerTintColor: "white"
-                    }}
-                />
-                   <Stack.Screen
-                    name="Register"
-                    component={Register}
-                    options={{
-                        headerShown: true,
-                        title: "Login",
-                        headerStyle: { backgroundColor: "black" },
-                        headerTintColor: "white"
-                    }}/>
 
-                <Stack.Screen
-                    name="Home"
-                    component={createBottomTabs}
-                    options={{
-                        title: "Map",
-                        headerStyle: { backgroundColor: "black" },
-                        headerTintColor: "white"
-                    }} />
+        <PaperProvider theme={theme}>
 
-            </Stack.Navigator>
-        </NavigationContainer>
+            <NavigationContainer>
+                <Stack.Navigator
+                    screenOptions={{ headerShown: false }}>
+                    <Stack.Screen
+                        name="Splash"
+                        component={Splash}
+                        options={{
+                            title: "Splash",
+                            headerStyle: { backgroundColor: "black" },
+                            headerTintColor: "white"
+                        }}
+                    />
+
+
+                    <Stack.Screen
+                        name="Login"
+                        component={Login}
+                        options={{
+                            title: "Login",
+                            headerStyle: { backgroundColor: "black" },
+                            headerTintColor: "white"
+                        }}
+                    />
+                    <Stack.Screen
+                        name="Register"
+                        component={Register}
+                        options={{
+                            headerShown: true,
+                            title: "Register",
+                            headerStyle: { backgroundColor: "black" },
+                            headerTintColor: "white"
+                        }} />
+
+                    <Stack.Screen
+                        name="Map"
+                        component={createBottomTabs}
+                        options={{
+                            title: "Map",
+                            headerStyle: { backgroundColor: "black" },
+                            headerTintColor: "white"
+                        }} />
+
+                </Stack.Navigator>
+            </NavigationContainer>
+        </PaperProvider>
     );
 }

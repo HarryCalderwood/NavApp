@@ -1,24 +1,17 @@
 import { Row } from 'native-base';
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet, Dimensions, StatusBar } from 'react-native'
+import { ScreenStackHeaderBackButtonImage } from 'react-native-screens';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export const styles = StyleSheet.create({
-  
-  //Login screen styles
-  center: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 
-  
+  //Login screen styles
+
 
   inputContainer: {
     flex: 6,
     width: '100%',
-    backgroundColor: "blue",
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -26,7 +19,6 @@ export const styles = StyleSheet.create({
   loginBtnContainer: {
     flex: 2,
     width: '100%',
-    backgroundColor: "green",
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -34,59 +26,62 @@ export const styles = StyleSheet.create({
   titleContainer: {
     flex: 2,
     width: '100%',
-  backgroundColor: "grey",
-  justifyContent: 'center',
-  alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   regBtnContainer: {
     flex: 2,
     width: '100%',
-    backgroundColor: "yellow",
     justifyContent: 'center',
     alignItems: 'center',
   },
-  
+
 
   title: {
-    fontSize: 50,
-    marginBottom: 60,
-
+    fontSize: 40,
+    paddingTop: '12%'
   },
 
-  forgot: {
-    color: "grey",
+  forgotPassword: {
+    color: "black",
     fontSize: 20,
- 
+    marginTop: '5%'
+
   },
 
   inputText: {
-    height: 50,
+    height: '20%',
     fontSize: 20,
     color: "black",
     borderColor: 'black',
     borderWidth: 2,
     paddingLeft: 8,
     borderColor: "black",
+    width: '60%'
+
   },
 
+
+
   loginBtn: {
-    
+
     backgroundColor: "black",
     borderRadius: 25,
-    height: '60%',
+    height: '40%',
+    width: '50%',
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 40
+
   },
 
   regNewUserdBtn: {
     width: "60%",
     backgroundColor: "grey",
     borderRadius: 25,
-    height: '35%',
+    height: '40%',
     justifyContent: "center",
-    marginTop: 40
+    alignItems: "center",
   },
 
   btnText: {
@@ -99,52 +94,128 @@ export const styles = StyleSheet.create({
     marginBottom: 5,
     color: "grey"
   },
-  
 
 
-  
 
-//Multi component styles
-container: {
-  height: windowHeight,
-},
 
-headerContainer: {
-  flex: 2,
-  width: '100%',
-  backgroundColor: "purple",
-  justifyContent: 'center',
-  alignItems: 'center',
 
-},
+  //Multi component styles
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+  },
 
-footerContainer: {
-  flex: 2,
-  width: '100%',
-  backgroundColor: "pink",
-  justifyContent: 'center',
-  alignItems: 'center',
+  scrollView: {
 
-},
 
-//map tab styles
- 
+
+  },
+
+  switchView: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center'
+  },
+
+  textInput: {
+    width: "70%",
+
+  },
+
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+    width: "100%"
+  },
+
+  flex1Container: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  flex2Container: {
+    flex: 2,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  flex3Container: {
+    flex: 3,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+  },
+
+  flex4Container: {
+    flex: 4,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  flex12Container: {
+    flex: 12,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignItems: 'center',
+
+    
+  },
+
+
+  center: {
+    flex: 1,
+
+    justifyContent: 'center',
+    alignItems: 'center',
+
+  },
+
+  headerContainer: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center'
+
+  },
+
+  footerContainer: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+  },
+
+  //map tab styles
+
+  mapView: {
+    height: '100%',
+    width: '100%',
+    flex: 10
+  },
 
   map: {
-    ...StyleSheet.absoluteFillObject
+    flex: 6
   },
 
   carousel: {
     position: 'absolute',
     bottom: 0,
-    marginBottom: 40
+
   },
 
   cardContainer: {
     backgroundColor: 'rgba(0,0,0,0.9)',
     height: 200,
     width: 300,
-    marginBottom: 100,
+    marginBottom: 10,
     borderRadius: 24
   },
 
@@ -170,17 +241,18 @@ footerContainer: {
   },
 
 
-//mapOverlays tab styles
- 
+
+  //mapOverlays tab styles
+
   overlayMap: {
-  flex: 8,
-  height: windowHeight, 
-  width: windowWidth
-},
+    flex: 8,
+    height: windowHeight,
+    width: windowWidth
+  },
 
   greenText: {
     fontSize: 30,
-    color: 'green', 
+    color: 'green',
   },
 
   boldText: {
@@ -190,16 +262,26 @@ footerContainer: {
 
   blueText: {
     fontSize: 30,
-    color: 'blue', 
+    color: 'blue',
   },
 
   labelContainer: {
-    marginTop: 40,
+    flex: 1,
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+   backgroundColor: '#ebedf0'
   },
-   
+
   calloutContainer: {
 
-  }
-  
+  },
+
+
+
+  //Components
+
+
+
 });

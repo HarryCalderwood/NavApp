@@ -1,76 +1,166 @@
-import React from 'react'
+//@refresh reset
+import React, { useState } from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'
-import { Text, Image, View, Dimensions } from 'react-native'
+import { Alert, Stylesheet, TouchableHighlight, Image, View, Dimensions } from 'react-native'
 import Carousel from 'react-native-snap-carousel';
 import { styles } from '../../styles/styles';
+import MapModal from '../../components/modal';
+import * as Index from '../../components/index';
+import { Card, Title, Paragraph, Text, Button,Appbar,Drawer } from 'react-native-paper';
+import { ScrollView } from 'react-native-gesture-handler';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
 
 const Map = () => {
+
   state = {
     marker: [],
+    card: [],
     coordinates: [
-      { name: 'Belfast Center', text: 'The capitol of Northern Ireland, the land of saints and scholars', latitude: 54.5773910388331, longitude: -5.93316118797817, image: require('../../images/BelCityCent.jpg') },
-      { name: 'Cookstown', text: 'Possible enemy stronghold.', latitude: 54.422037190962506, longitude: -5.905058609965918, image: require('../../images/cookstown.jpg') },
-      { name: 'Ballynahinch', text: 'Safe passage to all NGOs.', latitude: 54.402710887042254, longitude: -6.61196033274613, image: require('../../images/Ballynahinch.jpg') },
-      { name: 'St Johns Castle', text: 'Overnight base for the squade', latitude: 54.70785132594203, longitude: -6.723754731546966, image: require('../../images/Armagh.jpg') },
+      {
+        key: '1',
+        name: 'Belfast Center',
+        text: 'The capitol of Northern Ireland, the land of saints and scholars',
+        latitude: 54.5773910388331,
+        longitude: -5.93316118797817,
+        image: require('../../images/BelCityCent.jpg'),
+        date: '12.05.2020',
+        time: '16.00',
+        recordedBy: 'John Smith',
+
+      },
+      {
+        key: '2',
+        name: 'Cookstown',
+        text: 'Possible enemy stronghold.',
+        latitude: 54.422037190962506,
+        longitude: -5.905058609965918,
+        image: require('../../images/cookstown.jpg'),
+        date: '10.10.2020',
+        time: '11.05',
+        recordedBy: 'John Rambo',
+
+      },
+      {
+        key: '3',
+        name: 'Ballynahinch',
+        text: 'Safe passage to all NGOs.',
+        latitude: 54.402710887042254,
+        longitude: -6.61196033274613,
+        image: require('../../images/Ballynahinch.jpg'),
+        date: '01/02/2021',
+        time: '22.30',
+        recordedBy: 'Srgt Jennifer Thompson'
+      },
+      {
+        key: '4',
+        name: 'St Johns Castle',
+        text: 'Overnight base for the squade',
+        latitude: 54.70785132594203,
+        longitude: -6.723754731546966,
+        image: require('../../images/Armagh.jpg'),
+        date: '30.09.2020',
+        time: '00.02',
+        recordedBy: 'Joe Bloggs'
+      },
     ]
   }
-  onCarouselItemChange = (index) => {
-    let location = this.state.coordinates[index];
-    this._map.animateToRegion({
-      latitude: location.latitude,
-      longitude: location.longitude,
-      latitudeDelta: 0.08,
-      longitudeDelta: 0.035
-    })
-  }
 
-  renderCarouselItem = ({ item }) =>
-    <View style={styles.cardContainer}>
-      <Text style={styles.cardTitle}>{item.name}</Text>
-      <Image style={styles.cardImage} source={item.image} />
-      <Text style={styles.cardText}>{item.text}</Text>
-    </View>
+  const _handleSearch = () => console.log('Searching');
+
+  const _handleMore = () => console.log('More');
+
+
 
   return (
     <View style={styles.container}>
-      <MapView
-        provider={PROVIDER_GOOGLE}
-        ref={map => this._map = map}
-        style={styles.map}
-        showsUserLocation
-        followsUserLocation
-      >
+    <Appbar.Header>
+      <Appbar.Content title="Field Map" subtitle="Green Jackets" />
+      <Appbar.Action icon="magnify" onPress={_handleSearch} />
+      <Appbar.Action icon="dots-vertical" onPress={_handleMore} />
+    </Appbar.Header>
+     
+        <Index.CameraButton />
 
-        {
-          this.state.coordinates.map(marker => (
-            <Marker
-              key={marker.name}
-              text={marker.text}
-              coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
-            >
-              <Callout>
-                <View style={styles.calloutContainer}>
-                <Text>{marker.name}</Text>
-                <Text>{marker.text}</Text>
-                </View>
-              </Callout>
-            </Marker>
-          ))
-        }
-      </MapView>
 
-      <Carousel
-        ref={(c) => { this._carousel = c; }}
-        data={this.state.coordinates}
-        containerCustomStyle={styles.carousel}
-        renderItem={this.renderCarouselItem}
-        sliderWidth={Dimensions.get('window').width}
-        itemWidth={300}
-        itemHeight={200}
-        onSnapToItem={(index) => this.onCarouselItemChange(index)}
-      />
+      <View style={styles.flex4Container}>
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          ref={map => this._map = map}
+          style={styles.mapView}
+          showsUserLocation={true}
+          initialRegion={{
+            latitude: 54.60593633808052,
+            longitude: -5.928698478469805,
+            latitudeDelta: 0.43,
+            longitudeDelta: 0.34,
+          }}
+          onRegionChangeComplete={(region) => {
+            console.log(
+              `Map center: latitude: ${region.latitude}${region.latitude}
+                longitude: ${region.latitude}${region.longitude}`
+            );
+          }}
+        >
 
+
+
+          {
+            this.state.coordinates.map(marker => (
+
+              <TouchableHighlight
+                onPress={() => {
+
+                }}
+              >
+                <Marker
+                  key={marker.key}
+                  text={marker.text}
+                  coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
+                >
+
+                  <Callout>
+                    <View style={styles.calloutContainer}>
+                      <Text>{marker.name}</Text>
+                      <Text>{marker.text}</Text>
+                    </View>
+                  </Callout>
+                </Marker>
+              </TouchableHighlight>
+            ))
+          }
+        </MapView>
+      </View>
+
+
+      <View style={styles.flex2Container}>
+        <ScrollView>
+          {
+            this.state.coordinates.map(card => (
+
+              <Card 
+              key={card.key}
+              style={{marginBottom:10, width: 800, height:300}}
+              >
+                <Card.Title
+                  title={card.name}
+                  subtitle={'Recorded by ' + card.recordedBy + ' on ' + card.date + ' at ' + card.time}
+                />
+                <Card.Content>
+                  <Paragraph>{card.text} </Paragraph>
+                </Card.Content>
+                <Card.Cover source={card.image} />
+                <Card.Actions>
+                  <Button>Edit</Button>
+                </Card.Actions>
+              </Card>
+
+            ))
+
+          }
+        </ScrollView>
+      </View>
     </View>
-  )
-}
+  );
+};
 export default Map

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, SafeAreaView, Text, Button } from 'react-native';
+import { View, SafeAreaView, Text } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { fromJS } from 'immutable';
 import { styles } from '../../styles/styles';
-
+import * as Index from '../../components/index';
+import { Appbar, Button } from 'react-native-paper';
 const greenZone = {
   coordinates: [
     { name: 'Point 1', latitude: 54.5773910388331, longitude: -5.93316118797817 },
@@ -13,7 +14,7 @@ const greenZone = {
   ],
   strokeColor: 'green',
   strokeWidth: 4,
-  fillColor: '232, 252, 227'
+  fillColor: '#d9f5d5'
 };
 
 const unitedNations = {
@@ -24,7 +25,7 @@ const unitedNations = {
   ],
   strokeColor: 'blue',
   strokeWidth: 4,
-  fillColor: '224, 246, 255'
+  fillColor: '#bfd6ff'
 };
 
 export default class PlottingOverlays extends Component {
@@ -61,16 +62,28 @@ export default class PlottingOverlays extends Component {
   render() {
     const { greenStyles, blueStyles, overlays } = this.data.toJS();
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        <Appbar.Header>
+          <Appbar.Content title="Field Map" subtitle="Green Jackets" />
+          <Appbar.Action icon="magnify" />
+          <Appbar.Action icon="dots-vertical" />
+        </Appbar.Header>
 
         <View style={styles.labelContainer}>
-          <Button color='green' title='Green Zone' style={greenStyles} onPress={this.onClickGreen} />
-          <Button color='blue' title='Blue Zone' style={blueStyles} onPress={this.onClickBlue} />
+          <Button mode="contained" color='green' title='Green Zone'onPress={this.onClickGreen} style={{height: '70%', flex:1}}>Green Zone</Button>
+          <Button mode="contained" color='blue'title='Blue Zone' onPress={this.onClickBlue}style={{height: '70%', flex:1}}>Blue Zone</Button>
+          <Button mode="contained" color='red'title='Red Zone' onPress={this.onClickBlue}style={{height: '70%',flex:1}}>Red Zone</Button>
         </View>
-
+      <View style={styles.flex12Container}>
         <MapView
           style={styles.overlayMap}
           provider={PROVIDER_GOOGLE}
+          initialRegion={{
+            latitude: 54.60593633808052,
+            longitude: -5.928698478469805,
+            latitudeDelta: 0.6,
+            longitudeDelta: 0.6,
+          }}
         >
           {overlays.map((v, i) => (
             <MapView.Polygon
@@ -78,11 +91,12 @@ export default class PlottingOverlays extends Component {
               coordinates={v.coordinates}
               strokeColor={v.strokeColor}
               strokeWidth={v.strokeWidth}
-              fillColor={v.fillColor}
+         
             />
           ))}
         </MapView>
-      </SafeAreaView>
+        </View>
+      </View>
     );
   }
 }
