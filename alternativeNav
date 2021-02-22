@@ -1,0 +1,49 @@
+//@refresh reset
+import React, { useState, Component, useEffect, useDebugValue } from 'react';
+
+
+import apiKeys from './constants/ApiKeys';
+import { createStore } from 'redux';
+import Providers from './src/navigation/NavIndex';
+import { Provider } from 'react-redux';
+import { DefaultTheme, Provider as PaperProvider, TextInput } from 'react-native-paper';
+import SplashScreen from 'react-native-splash-screen';
+import * as firebase from "firebase";
+import AuthenticationStack from './src/navigation/AuthenticationStack';
+import AppStack from './src/navigation/AppStack';
+import { Navigation } from '@material-ui/icons';
+
+
+const theme = {
+    ...DefaultTheme,
+    myOwnProperty: true,
+    colors: {
+        ...DefaultTheme.colors,
+        primary: 'black',
+        accent: 'black',
+    },
+};
+
+const reducer = () => {
+}
+const store = createStore(reducer)
+
+
+export default function App() {
+
+        if (!firebase.apps.length) {
+          console.log('Connected with Firebase')
+          firebase.initializeApp(apiKeys.firebaseConfig);
+        }
+    return (
+        <PaperProvider theme={theme}>
+            <Navigation>
+              
+
+            </Navigation>
+
+
+
+        </PaperProvider>
+    );
+}

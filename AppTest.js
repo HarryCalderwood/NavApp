@@ -20,9 +20,6 @@ import Splash from './src/screens/stack/splash';
 import Login from './src/screens/stack/login';
 import Register from './src/screens/stack/register';
 import Logout from './src/screens/stack/logout';
-import LoadingScreen from './src/screens/stack/LoadingScreen';
-import ForgotPassword from './src/screens/stack/ForgotPassword';
-
 
 import Map from './src/screens/bottomTabs/map';
 import Areas from './src/screens/bottomTabs/mapOverlays';
@@ -137,6 +134,45 @@ createBottomTabs = (props) => {
 }
 
 export default function App() {
+    // const [user, setUser] = useState(null)
+    // const [name, setName] = useState('')
+    //useEffect(() => {
+    //   readUser()
+    // }, [])
+
+    // async function readUser() {
+    //    const user = await AsyncStorage.getItem('user')
+    //    if (user) {
+    //         setUser(JSON.parse(user))
+    //    }
+    //   }
+
+    //  async function handlePress() {
+    //    const _id = Math.random().toString(36).substring(7)
+    //    const user = {_id, name }
+    //    await AsyncStorage.setItem('user', JSON.stringify(user))
+    //    setUser(user)
+
+    // }
+
+
+    // if (!user) {
+    //  return (
+    //    <View style={styles.container}>
+    //       <TextInput
+    //           style={{
+    //              height: 50,
+    //             width: '100%',
+    //             borderWidth: 1,
+    //            padding: 50
+    //        }}
+    //       placeholder='Name'
+    //       value={name} onChangeText={setName}
+    //    />
+    //    <Button onPress={handlePress} title="Enter"></Button>
+    //  </View>
+    //  )
+    //   }
 
     if (!firebase.apps.length) {
         console.log('Connected with Firebase')
@@ -150,15 +186,16 @@ export default function App() {
             <NavigationContainer>
                 <Stack.Navigator
                     screenOptions={{ headerShown: false }}>
-
                     <Stack.Screen
-                        name={"Loading"}
-                        component={LoadingScreen}
+                        name="Splash"
+                        component={Splash}
                         options={{
-                            title: "Loading",
+                            title: "Splash",
                             headerStyle: { backgroundColor: "black" },
                             headerTintColor: "white"
-                        }} />
+                        }}
+                    />
+
 
                     <Stack.Screen
                         name="Login"
@@ -173,20 +210,11 @@ export default function App() {
                         name="Register"
                         component={Register}
                         options={{
+                            headerShown: true,
                             title: "Register",
                             headerStyle: { backgroundColor: "black" },
                             headerTintColor: "white"
                         }} />
-
-                    <Stack.Screen
-                        name="ForgotPassword"
-                        component={ForgotPassword}
-                        options={{
-                            title: "ForgotPassword",
-                            headerStyle: { backgroundColor: "black" },
-                            headerTintColor: "white"
-                        }}
-                    />
 
                     <Stack.Screen
                         name="Map"

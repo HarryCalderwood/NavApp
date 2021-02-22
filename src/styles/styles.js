@@ -37,7 +37,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-
   title: {
     fontSize: 40,
     paddingTop: '12%'

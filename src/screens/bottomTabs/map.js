@@ -1,17 +1,46 @@
-//@refresh reset
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'
-import { Alert, Stylesheet, TouchableHighlight, Image, View, Dimensions } from 'react-native'
+import { Alert, Stylesheet, TouchableOpacity, Image, View, Dimensions } from 'react-native'
 import Carousel from 'react-native-snap-carousel';
 import { styles } from '../../styles/styles';
 import MapModal from '../../components/modal';
 import * as Index from '../../components/index';
-import { Card, Title, Paragraph, Text, Button,Appbar,Drawer } from 'react-native-paper';
+import { Card, Title, Paragraph, Text, Button, Appbar, Drawer } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import * as firebase from 'firebase';
+import { loggingOut } from '../../../API/FirebaseFunctions';
 
+const Map = ({ navigation }) => {
 
-const Map = () => {
+  let currentUserUID = firebase.auth().currentUser.uid;
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
+  useEffect(() => {
+    async function getUserInfo() {
+      let doc = await firebase
+        .firestore()
+        .collection('users')
+        .doc(currentUserUID)
+        .get();
+
+      if (!doc.exists) {
+        Alert.alert('No user data found!')
+      } else {
+        let dataObj = doc.data();
+        setFirstName(dataObj.firstName)
+        setLastName(dataObj.lastName)
+      }
+    }
+    getUserInfo();
+  })
+
+  const handlePress = () => {
+    loggingOut();
+    navigation.replace('Login');
+  };
 
   state = {
     marker: [],
@@ -70,17 +99,22 @@ const Map = () => {
 
   const _handleMore = () => console.log('More');
 
+  const _handleMarkerPress = (markerKeyData) => {
 
+
+  };
+  const _handleLongMarkerPress = () => {
+  };
 
   return (
     <View style={styles.container}>
-    <Appbar.Header>
-      <Appbar.Content title="Field Map" subtitle="Green Jackets" />
-      <Appbar.Action icon="magnify" onPress={_handleSearch} />
-      <Appbar.Action icon="dots-vertical" onPress={_handleMore} />
-    </Appbar.Header>
-     
-        <Index.CameraButton />
+      <Appbar.Header>
+        <Appbar.Content title={firstName + " " + lastName} subtitle="Green Jackets" />
+        <Appbar.Action icon="magnify" onPress={_handleSearch} />
+        <Appbar.Action icon="dots-vertical" onPress={handlePress} />
+      </Appbar.Header>
+
+      <Index.CameraButton />
 
 
       <View style={styles.flex4Container}>
@@ -108,28 +142,26 @@ const Map = () => {
           {
             this.state.coordinates.map(marker => (
 
-              <TouchableHighlight
-                onPress={() => {
-
-                }}
+              //
+              <Marker
+                key={marker.key}
+                text={marker.text}
+                coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
               >
-                <Marker
-                  key={marker.key}
-                  text={marker.text}
-                  coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
-                >
 
-                  <Callout>
-                    <View style={styles.calloutContainer}>
-                      <Text>{marker.name}</Text>
-                      <Text>{marker.text}</Text>
-                    </View>
-                  </Callout>
-                </Marker>
-              </TouchableHighlight>
+                <Callout>
+
+
+                  onPress={() => this._handleMarkerPress(marker.key)}
+
+                </Callout>
+              </Marker>
+
             ))
           }
+
         </MapView>
+
       </View>
 
 
@@ -138,9 +170,9 @@ const Map = () => {
           {
             this.state.coordinates.map(card => (
 
-              <Card 
-              key={card.key}
-              style={{marginBottom:10, width: 800, height:300}}
+              <Card
+                key={card.key}
+                style={{ marginBottom: 10, width: 800, height: 300 }}
               >
                 <Card.Title
                   title={card.name}

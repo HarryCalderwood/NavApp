@@ -504,3 +504,64 @@ LogBox.ignoreLogs(['Settign a times for a long period of time'])
 const onMarkerPress = () => setCardKey(marker.key);
 
                   this.setCardKey(marker.key)
+
+                   <ImageBackground
+                        source={bgImg}
+                        style={styles.backgroundImage}
+                    >
+
+          
+          
+  const [email, onChangeEmail] = React.useState('Username');
+  const [password, onChangePassword] = React.useState('Password');
+
+
+    const [forename, onChangeForename] = React.useState('Forename');
+    const [surname, onChangeSurname] = React.useState('Surname');
+    const [email, onChangeEmail] = React.useState('Email');
+    const [password, onChangePassword] = React.useState('Password');
+    const [confirmPassword, onChangeConfirmPassword] = React.useState('ConfirmPassword');
+
+
+
+          <Stack.Navigator
+                    screenOptions={{ headerShown: false }}>
+                    <Stack.Screen
+                        name="Splash"
+                        component={Splash}
+                        options={{
+                            title: "Splash",
+                            headerStyle: { backgroundColor: "black" },
+                            headerTintColor: "white"
+                        }}
+                    />
+
+ onPress={() => this._handleMarkerPress(marker.key)}
+
+   <View style={styles.flex2Container}>
+        <ScrollView>
+          {
+            this.state.coordinates.map(card => (
+
+              <Card
+                key={card.key}
+                style={{ marginBottom: 10, width: 800, height: 300 }}
+              >
+                <Card.Title
+                  title={card.name}
+                  subtitle={'Recorded by ' + card.recordedBy + ' on ' + card.date + ' at ' + card.time}
+                />
+                <Card.Content>
+                  <Paragraph>{card.text} </Paragraph>
+                </Card.Content>
+                <Card.Cover source={card.image} />
+                <Card.Actions>
+                  <Button>Edit</Button>
+                </Card.Actions>
+              </Card>
+
+            ))
+
+          }
+        </ScrollView>
+      </View>
