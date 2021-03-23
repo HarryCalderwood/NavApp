@@ -1,4 +1,3 @@
-
 import * as firebase from "firebase";
 import "firebase/firestore";
 import { Alert } from "react-native";
@@ -8,14 +7,12 @@ export async function registration(email, password, lastName, firstName) {
     await firebase.auth().createUserWithEmailAndPassword(email, password);
     const currentUser = firebase.auth().currentUser;
 
-    const db = firebase.firestore();
-    db.collection("users")
-      .doc(currentUser.uid)
-      .set({
-        email: currentUser.email,
-        lastName: lastName,
-        firstName: firstName,
-      });
+    var db = firebase.firestore();
+    db.collection("users").doc(currentUser.uid).set({
+      email: currentUser.email,
+      lastName: lastName,
+      firstName: firstName,
+    });
   } catch (err) {
     Alert.alert("There is something wrong!!!!", err.message);
   }
@@ -23,11 +20,9 @@ export async function registration(email, password, lastName, firstName) {
 
 export async function signIn(email, password) {
   try {
-    await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password);
+    await firebase.auth().signInWithEmailAndPassword(email, password);
   } catch (err) {
-    Alert.alert("There is something wrong!", err.message);
+    Alert.alert("Unable to login", err.message);
   }
 }
 
@@ -35,37 +30,59 @@ export async function loggingOut() {
   try {
     await firebase.auth().signOut();
   } catch (err) {
-    Alert.alert('There is something wrong!', err.message);
+    Alert.alert("There is something wrong!", err.message);
   }
 }
 
 export async function forgotPassword(Email) {
   try {
-    firebase.auth().sendPasswordResetEmail(Email)
+    firebase.auth().sendPasswordResetEmail(Email);
     Alert.alert("Please check your email for password reset information");
   } catch (err) {
-    Alert.alert('There is something wrong!', err.message);
+    Alert.alert("There is something wrong!", err.message);
   }
 }
 
-var database = firebase.database();
+export async function addNewMarker(
+  name,
+  description,
+  latitude,
+  longitude,
+  timestamp,
+  imagePath
+) {
+  var db = firebase.firestore();
 
+  db.collection("mapMarker")
+    .add({
+      name: name,
+      description: description,
+      longitude: longitude,
+      latitude: latitude,
+      timestamp: timestamp,
+      imagePath: imagePath,
+    })
+    .then((docRef) => {
+      console.log("Document written with ID: ", docRef.id);
+    })
+    .catch((error) => {
+      console.error("Error adding document: ", error);
+    });
+}
 
-function addNewMarker(uid, name, description,) {
-
-  // A post entry.
-  var markerData = {
-    uid: uid,
-    name: name,
-    description: description
-  };
-
-  // Get a key for a new Post.
-  var newMarkerKey = firebase.database().ref().child('mapMarker').push().key;
-
-  // Write the new post's data simultaneously in the posts list and the user's post list.
-  var updates = {};
-  updates['/mapMarker/' + newMarkerKey] = markerData;
-
-  return firebase.database().ref().update(updates);
+export async function updateMarkers(id, name, description, timestamp) {
+  var db = firebase.firestore();
+  db.collection("mapMarker")
+    .doc(id)
+    .update({
+      name: name,
+      description: description,
+      timestamp: timestamp,
+    })
+    .then(() => {
+      console.log("Document successfully updated");
+    })
+    .catch((error) => {
+      console.error("Error writing document: ", error);
+    });
 }

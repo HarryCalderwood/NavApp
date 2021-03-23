@@ -1,72 +1,83 @@
-import React, { useState, useEffect } from 'react';
-import { View, Keyboard, Alert, SafeAreaView, TouchableOpacity, StatusBar, KeyboardAvoidingView, TouchableWithoutFeedback, ImageBackground } from 'react-native';
-import { styles } from '../../styles/styles';
-import MapModal from '../../components/modal';
-import * as Index from '../../components/index';
-import { Title, Text, Subheading, TextInput, Switch, Button, Headline } from 'react-native-paper';
-import { ScrollView } from 'react-native-gesture-handler';
-import { moderateScale } from 'react-native-size-matters';
-import { signIn } from '../../../API/FirebaseFunctions';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Keyboard,
+  Alert,
+  SafeAreaView,
+  TouchableOpacity,
+  StatusBar,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  ImageBackground,
+} from "react-native";
+import { styles } from "../../styles/styles";
+import MapModal from "../../components/modal";
+import * as Index from "../../components/index";
+import {
+  Title,
+  Text,
+  Subheading,
+  TextInput,
+  Switch,
+  Button,
+  Headline,
+} from "react-native-paper";
+import { ScrollView } from "react-native-gesture-handler";
+import { moderateScale } from "react-native-size-matters";
+import { signIn } from "../../../API/FirebaseFunctions";
 
 const Login = ({ navigation }) => {
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const [hidePassword, setHidePassword] = useState(false);
   const onPasswordSwitch = () => setHidePassword(!hidePassword);
 
-  const handlePress = () => {
-    if (!email) {
-      Alert.alert('Email field is required.');
+  const _handleLoginPress = () => {
+    if (!email && !password) {
+      Alert.alert("Please enter your email and password");
+    } else if (!email) {
+      Alert.alert("Please enter your email");
+    } else if (!password) {
+      Alert.alert("Please enter your password");
+    } else {
+      signIn(email, password);
+      setEmail("");
+      setPassword("");
+      navigation.navigate("Loading");
     }
-
-    if (!password) {
-      Alert.alert('Password field is required.');
-    }
-
-    signIn(email, password);
-    setEmail('');
-    setPassword('');
   };
 
-
-  var bgImg = require('../../images/splashBackground.jpeg');
+  var bgImg = require("../../images/splashBackground.jpeg");
 
   return (
-
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-
         <View style={styles.center}>
-
-
-
-
-
           <View style={styles.flex3Container}>
-            <Headline style={{ fontSize: 50, paddingTop: 80, fontWeight: 'bold' }}>Desk Officer</Headline>
+            <Headline
+              style={{ fontSize: 50, paddingTop: 80, fontWeight: "bold" }}
+            >
+              Desk Officer
+            </Headline>
           </View>
 
           <View style={styles.flex2Container}>
-
             <TextInput
               mode="outlined"
               style={styles.textInput}
               label="Enter your email"
               value={email}
               onChangeText={(email) => setEmail(email)}
-              textContentType={'emailAddress'}
+              textContentType={"emailAddress"}
               maxLength={320}
             />
           </View>
 
-
           <View style={styles.flex2Container}>
-
             <TextInput
               mode="outlined"
               style={styles.textInput}
@@ -80,54 +91,54 @@ const Login = ({ navigation }) => {
             />
 
             <View style={styles.switchView}>
-              <Text allowFontScaling={true} style={{ marginTop: 8 }} >
+              <Text allowFontScaling={true} style={{ marginTop: 8 }}>
                 Show Password
-                </Text>
+              </Text>
               <Switch
                 value={hidePassword}
                 label="Show Password"
                 onValueChange={onPasswordSwitch}
                 style={{
-                  transform: [{ scaleX: moderateScale(0.6, 1) }, {
-                    scaleY:
-                      moderateScale(0.6, 1)
-                  }],
-                  marginTop: '0.6%'
+                  transform: [
+                    { scaleX: moderateScale(0.6, 1) },
+                    {
+                      scaleY: moderateScale(0.6, 1),
+                    },
+                  ],
+                  marginTop: "0.6%",
                 }}
               ></Switch>
-
-
             </View>
           </View>
 
-
           <View style={styles.flex1Container}>
-            <Button mode="contained"  onPress={handlePress}>
+            <Button mode="contained" onPress={_handleLoginPress}>
               Login
-          </Button>
+            </Button>
           </View>
 
           <View style={styles.flex1Container}>
-            <Button mode="contained" onPress={() => navigation.navigate('ForgotPassword')}>
+            <Button
+              mode="contained"
+              onPress={() => navigation.navigate("ForgotPassword")}
+            >
               Forgot Password?
-          </Button>
+            </Button>
           </View>
 
           <View style={styles.flex1Container}>
-            <Button mode="contained" onPress={() => navigation.navigate('Register')}>
+            <Button
+              mode="contained"
+              onPress={() => navigation.navigate("Register")}
+            >
               Register New User
-          </Button>
+            </Button>
           </View>
-
 
           <View style={styles.footerContainer} />
-
-
-        </View >
-
+        </View>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView >
-
+    </KeyboardAvoidingView>
   );
 };
 export default Login;

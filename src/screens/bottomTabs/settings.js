@@ -1,26 +1,56 @@
-import React, { useState, Component } from 'react';
+import React, { useState, Component } from "react";
+
 import {
-    Alert,
-    Modal,
-    StyleSheet,
-    Text,
-    TouchableHighlight,
-    View,
-    Button
-} from 'react-native';
-import MapModal from './../../components/index';
+  Alert,
+  Modal,
+  StyleSheet,
+  ScrollView,
+  TouchableHighlight,
+  View,
+} from "react-native";
+import {
+  Title,
+  Surface,
+  Text,
+  Subheading,
+  TextInput,
+  Appbar,
+  Headine,
+  Checkbox,
+  Switch,
+  Button,
+  Headline,
+} from "react-native-paper";
+import { styles } from "../../styles/styles";
 
-import { SafeAreaView } from 'react-navigation';
+_handleProfilePress = () => {
+  console.log("hello");
+};
 
-import { FontAwesome5 } from "@expo/vector-icons";
-
+_handlePasswordPress = () => {};
 
 const Settings = () => {
-    return(
-    <View>
+  return (
+    <View style={styles.container}>
+      <Appbar.Header>
+        <Appbar.Content style={{ alignItems: "center" }} title="Settings" />
+      </Appbar.Header>
+      <Surface style={styles.surface} onProfilePress={_handleProfilePress}>
+        <Text style={styles.surfaceText}>Profile</Text>
+      </Surface>
+      <Surface style={styles.surface}>
+        <Text style={styles.surfaceText}>Change Password</Text>
+      </Surface>
+      <Surface style={styles.surface}>
+        <Text style={styles.surfaceText}>Dark Mode</Text>
+      </Surface>
+      <Surface style={styles.surface}>
+        <Text style={styles.surfaceText}>Text Size</Text>
+      </Surface>
 
+      <View></View>
     </View>
-    );
-}
+  );
+};
 
-export default Settings
+export default Settings;

@@ -1,108 +1,136 @@
-import React from 'react';
-import { TouchableOpacity, ScrollView, View } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
-
-import { styles } from '../../styles/styles'
+import React, { useState, useEffect, Component } from "react";
+import { TouchableOpacity, Pressable, ScrollView, View } from "react-native";
+import { SafeAreaView } from "react-navigation";
+import * as firebase from "firebase";
+import { styles } from "../../styles/styles";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Card, Title, Paragraph, Text, Appbar, Button } from 'react-native-paper';
+import {
+  Card,
+  Title,
+  Paragraph,
+  Text,
+  Appbar,
+  Button,
+} from "react-native-paper";
 
-const Briefing = () => {
+export default class Briefing extends Component {
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      markerList: [],
+      card: [],
+    };
+  }
 
-    state = {
-        card: [],
-        coordinates: [
-            {
-                name: 'Belfast Center',
-                text: 'The capitol of Northern Ireland, the land of saints and scholars',
-                latitude: 54.5773910388331,
-                longitude: -5.93316118797817,
-                image: require('../../images/BelCityCent.jpg'),
-                date: '12.05.2020',
-                time: '16.00',
-                recordedBy: 'John Smith',
+  componentDidMount() {
+    var db = firebase.firestore();
+    const markers = [];
+    db.collection("mapMarker")
+      .get()
+      .then((snapshot) => {
+        snapshot.docs.forEach((marker) => {
+          let currentID = marker.id;
+          let obj = { ...marker.data(), ["id"]: currentID };
+          markers.push(obj);
+        });
+        this.setState({
+          markerList: markers,
+        });
+      });
+  }
 
-            },
-            {
-                name: 'Cookstown',
-                text: 'Possible enemy stronghold.',
-                latitude: 54.422037190962506,
-                longitude: -5.905058609965918,
-                image: require('../../images/cookstown.jpg'),
-                date: '10.10.2020',
-                time: '11.05',
-                recordedBy: 'John Rambo',
-
-            },
-            {
-                name: 'Ballynahinch',
-                text: 'Safe passage to all NGOs.',
-                latitude: 54.402710887042254,
-                longitude: -6.61196033274613,
-                image: require('../../images/Ballynahinch.jpg'),
-                date: '01/02/2021',
-                time: '22.30',
-                recordedBy: 'Srgt Jennifer Thompson'
-            },
-            {
-                name: 'St Johns Castle',
-                text: 'Overnight base for the squade',
-                latitude: 54.70785132594203,
-                longitude: -6.723754731546966,
-                image: require('../../images/Armagh.jpg'),
-                date: '30.09.2020',
-                time: '00.02',
-                recordedBy: 'Joe Bloggs'
-            },
-        ]
-    }
-
+  render() {
+    const { navigation } = this.props;
+    this.componentDidMount();
 
     return (
-        <View style={styles.container}>
-            <Appbar.Header>
-                <Appbar.Content title="Green Zone" subtitle="Green Jackets" />
-                <Appbar.Action icon="magnify" />
-                <Appbar.Action icon="dots-vertical" />
-            </Appbar.Header>
-            
-            <View style={styles.labelContainer}>
-                <Button mode="contained" >Green Zone</Button>
-                <Button mode="contained"  >Blue Zone</Button>
-                <Button mode="contained" >Red Zone</Button>
-            </View>
+      <View style={styles.container}>
+        <Appbar.Header>
+          <Appbar.Content title="" />
+          <Pressable
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? "rgb(94, 184, 95)" : "white",
+              },
+              styles.wrapperCustom,
+            ]}
+          >
+            <Text style={{ fontSize: 18 }}>All locations</Text>
+            {/* <Button mode="contained">Green Zone</Button> */}
+          </Pressable>
+          <Pressable
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? "rgb(94, 184, 95)" : "white",
+              },
+              styles.wrapperCustom,
+            ]}
+          >
+            <Text style={{ fontSize: 18 }}>Green Zones</Text>
+            {/* <Button mode="contained">Green Zone</Button> */}
+          </Pressable>
+          <Pressable
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? "rgb(48, 107, 227)" : "white",
+              },
+              styles.wrapperCustom,
+            ]}
+          >
+            <Text style={{ fontSize: 18 }}> Blue Zones </Text>
+          </Pressable>
 
-            <View style = {styles.flex12Container}>
+          <Pressable
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? "rgb(230, 67, 46)" : "white",
+              },
+              styles.wrapperCustom,
+            ]}
+          >
+            <Text style={{ fontSize: 18 }}> Red Zones</Text>
+          </Pressable>
+          <Appbar.Action icon="logout" onPress={this.logoutAlert} />
+        </Appbar.Header>
 
-            <ScrollView>
-                {
-                    this.state.coordinates.map(card => (
-                        <Card 
-                        key={card.name}
-                        style={{marginBottom:10, width: 800}}
-                        >
-
-                            <Card.Title
-                                title={card.name}
-                                subtitle={'Recorded by ' + card.recordedBy + ' on ' + card.date + ' at ' + card.time}
-                            />
-                            <Card.Content>
-                                <Paragraph>{card.text} </Paragraph>
-                            </Card.Content>
-                            <Card.Cover source={card.image} />
-                            <Card.Actions>
-                                <Button>Edit</Button>
-                            </Card.Actions>
-                        </Card>
-
-                    ))
-                }
-            </ScrollView>
-            </View>
+        <View style={styles.flex12Container}>
+          <ScrollView>
+            {this.state.markerList.map((pin, index) => (
+              <Pressable
+                style={({ pressed }) => [
+                  {
+                    backgroundColor: pressed ? "rgb(153, 153, 153)" : "white",
+                  },
+                  styles.wrapperCustom,
+                ]}
+              >
+                <Card key={index} style={{}}>
+                  <Card.Title
+                    title={pin.name}
+                    // subtitle={
+                    //   "Recorded by " +
+                    //   pin.recordedBy +
+                    //   " on " +
+                    //   pin.date +
+                    //   " at " +
+                    //   pin.time
+                    // }
+                  />
+                  <Card.Content>
+                    <Paragraph>{pin.description} </Paragraph>
+                    {/* <Paragraph>{toDate(pin.timestamp)} </Paragraph> */}
+                  </Card.Content>
+                  {/* <Card.Cover source={pin.image} /> */}
+                  <Card.Actions>
+                    <Button>Edit</Button>
+                  </Card.Actions>
+                </Card>
+              </Pressable>
+            ))}
+          </ScrollView>
         </View>
-
-
+      </View>
     );
-};
-
-export default Briefing;
+  }
+}
