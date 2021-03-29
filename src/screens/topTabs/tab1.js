@@ -1,14 +1,7 @@
-import React from 'react';
-import {View, Text , ImageBackground} from 'react-native';
-import {styles} from '../../styles/styles';
+import React from "react";
+import { View, Text, ImageBackground } from "react-native";
+import { styles } from "../../styles/styles";
 
-
-Tab1 = () => {}
- 
-            
-
-
-
-
+Tab1 = () => {};
 
 export default Tab1;

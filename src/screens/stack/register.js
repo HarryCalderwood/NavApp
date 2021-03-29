@@ -19,7 +19,6 @@ import {
   Button,
   TextInput,
 } from "react-native-paper";
-import { ScrollView } from "react-native-gesture-handler";
 
 import * as firebase from "firebase";
 import { registration } from "../../../API/FirebaseFunctions";
@@ -86,7 +85,6 @@ const Register = ({ navigation }) => {
               onChangeText={(name) => setFirstName(name)}
               value={firstName}
               allowFontScaling={true}
-              blurOnSubmit={true}
             />
           </View>
           <View style={styles.flex2Container}>
@@ -97,7 +95,6 @@ const Register = ({ navigation }) => {
               value={lastName}
               onChangeText={(name) => setLastName(name)}
               allowFontScaling={true}
-              blurOnSubmit={true}
             />
           </View>
           <View style={styles.flex2Container}>
@@ -110,7 +107,6 @@ const Register = ({ navigation }) => {
               textContentType={"emailAddress"}
               maxLength={320}
               allowFontScaling={true}
-              blurOnSubmit={true}
             />
           </View>
 
@@ -122,7 +118,6 @@ const Register = ({ navigation }) => {
               value={password}
               onChangeText={(password) => setPassword(password)}
               allowFontScaling={true}
-              blurOnSubmit={true}
               secureTextEntry={true}
             />
           </View>
@@ -135,7 +130,6 @@ const Register = ({ navigation }) => {
               value={confirmPassword}
               onChangeText={(password2) => setConfirmPassword(password2)}
               allowFontScaling={true}
-              blurOnSubmit={true}
               secureTextEntry={true}
             />
           </View>

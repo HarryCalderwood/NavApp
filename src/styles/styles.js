@@ -11,13 +11,6 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  loginBtnContainer: {
-    flex: 2,
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
   titleContainer: {
     flex: 2,
     width: "100%",
@@ -97,7 +90,7 @@ export const styles = StyleSheet.create({
   },
 
   textInput: {
-    width: "95%",
+    width: "90%",
   },
 
   backgroundImage: {

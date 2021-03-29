@@ -30,15 +30,17 @@ const ForgotPassword = ({ navigation }) => {
         <Title>Forgot password?</Title>
       </View>
       <View style={styles.flex1Container}>
-        <Title
+        <Text
           style={{
             marginRight: 40,
             marginLeft: 40,
+            paddingBottom: 5,
+            fontSize: 15,
           }}
         >
           Please enter your email address below. We will send you an email link
           to reset your password.
-        </Title>
+        </Text>
         <TextInput
           mode="outlined"
           style={styles.textInput}
@@ -50,7 +52,7 @@ const ForgotPassword = ({ navigation }) => {
         />
       </View>
 
-      <View style={styles.flex2Container}>
+      <View style={styles.flex3Container}>
         <Button mode="contained" onPress={_handleSendPasswordReset}>
           Send password reset
         </Button>

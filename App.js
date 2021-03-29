@@ -1,16 +1,12 @@
-//@refresh reset
 import React, { useState, Component, useEffect, useDebugValue } from "react";
 import AsyncStorage from "@react-native-community/async-storage";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { LogBox } from "react-native";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-
-import {
-  DefaultTheme,
-  Provider as PaperProvider,
-  TextInput,
-} from "react-native-paper";
+import { YellowBox } from "react-native";
+console.disableYellowBox = true;
+import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import SplashScreen from "react-native-splash-screen";
 import * as firebase from "firebase";
 import apiKeys from "./constants/ApiKeys";
@@ -26,8 +22,8 @@ import DataUpload from "./src/screens/stack/DataUpload";
 import AppCamera from "./src/screens/bottomTabs/AppCamera";
 
 import Map from "./src/screens/bottomTabs/map";
-
 import Settings from "./src/screens/bottomTabs/Settings";
+import Briefing from "./src/screens/bottomTabs/briefing";
 
 import Tab1 from "./src/screens/topTabs/tab1";
 import Tab2 from "./src/screens/topTabs/tab2";
@@ -36,8 +32,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { View } from "native-base";
-import { styles } from "./src/styles/styles";
 
 const Stack = createStackNavigator();
 const MaterialBottomTabs = createMaterialBottomTabNavigator();
@@ -53,18 +47,6 @@ const theme = {
   },
 };
 
-const reducer = () => {};
-const store = createStore(reducer);
-
-const createTopTabs = (props) => {
-  return (
-    <MaterialTopTabs.Navigator>
-      <MaterialTopTabs.Screen name="Tab 1" component={Tab1} />
-      <MaterialTopTabs.Screen name="Tab 2" component={Tab2} />
-    </MaterialTopTabs.Navigator>
-  );
-};
-LogBox.ignoreAllLogs();
 createBottomTabs = (props) => {
   return (
     <MaterialBottomTabs.Navigator
@@ -83,7 +65,20 @@ createBottomTabs = (props) => {
           ),
         }}
       />
-
+      <MaterialBottomTabs.Screen
+        name="Briefing"
+        component={Briefing}
+        options={{
+          tabBarLabel: "Briefing",
+          tabBarIcon: ({ theme }) => (
+            <MaterialCommunityIcons
+              name="information "
+              color={theme}
+              size={26}
+            />
+          ),
+        }}
+      />
       <MaterialBottomTabs.Screen
         name="AppCamera"
         component={AppCamera}
@@ -164,6 +159,7 @@ export default function App() {
             name="Map"
             component={createBottomTabs}
             options={{
+              gestureEnabled: false,
               title: "Map",
               headerStyle: { backgroundColor: "black" },
               headerTintColor: "white",
@@ -174,5 +170,3 @@ export default function App() {
     </PaperProvider>
   );
 }
-
-registerRootComponent(App);

@@ -22,7 +22,7 @@ import {
   Button,
   Headline,
 } from "react-native-paper";
-import { ScrollView } from "react-native-gesture-handler";
+
 import { moderateScale } from "react-native-size-matters";
 import { signIn } from "../../../API/FirebaseFunctions";
 
@@ -85,8 +85,6 @@ const Login = ({ navigation }) => {
               value={password}
               onChangeText={(password) => setPassword(password)}
               maxLength={20}
-              allowFontScaling={true}
-              blurOnSubmit={true}
               secureTextEntry={hidePassword ? false : true}
             />
 
@@ -98,15 +96,15 @@ const Login = ({ navigation }) => {
                 value={hidePassword}
                 label="Show Password"
                 onValueChange={onPasswordSwitch}
-                style={{
-                  transform: [
-                    { scaleX: moderateScale(0.6, 1) },
-                    {
-                      scaleY: moderateScale(0.6, 1),
-                    },
-                  ],
-                  marginTop: "0.6%",
-                }}
+                // style={{
+                //   transform: [
+                //     { scaleX: moderateScale(0.6, 1) },
+                //     {
+                //       scaleY: moderateScale(0.6, 1),
+                //     },
+                //   ],
+                //   marginTop: "0.6%",
+                // }}
               ></Switch>
             </View>
           </View>
@@ -122,7 +120,7 @@ const Login = ({ navigation }) => {
               mode="contained"
               onPress={() => navigation.navigate("ForgotPassword")}
             >
-              Forgot Password?
+              Forgot Password
             </Button>
           </View>
 
