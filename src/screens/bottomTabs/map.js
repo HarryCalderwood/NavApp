@@ -1,6 +1,8 @@
 import React, { useState, useEffect, Component } from "react";
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from "react-native-maps";
 import * as FileSystem from "expo-file-system";
+import ImageZoom from "react-native-image-pan-zoom";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Alert,
@@ -23,6 +25,7 @@ import {
   Title,
   Text,
   TextInput,
+  Subheading,
   Button,
   Appbar,
   Checkbox,
@@ -41,6 +44,7 @@ import { LocalHospital } from "@material-ui/icons";
 import AppCamera from "./AppCamera";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
+import { ScrollView } from "react-native-gesture-handler";
 
 //Map Overlays:
 
@@ -249,9 +253,13 @@ export default class Map extends Component {
   };
 
   _handleMarkerPress = (pin) => {
+    // this.map.animateCamera(
+    //   { center: pin.latitude & pin.longitude },
+    //   { duration: 2000 }
+    // );
     this.setState({ selectedMarkerInfo: pin });
     this.setState({ infoModalVisible: true });
-    var imgLocation = this.state.selectedMarkerInfo.imagePath;
+    var imgLocation = pin.imagePath;
     if (imgLocation !== undefined) {
       var storageRef = firebase.storage().ref();
 
@@ -310,34 +318,36 @@ export default class Map extends Component {
       return (
         <Image
           source={require("../../images/placeholder.png")}
-          style={{ width: 100, height: 100 }}
+          style={{ width: 180, height: 180 }}
         />
       );
     } else {
       return (
         <Image
           source={{ uri: this.state.image }}
-          style={{ width: 80, height: 60 }}
+          style={{ width: 150, height: 150 }}
         />
       );
     }
   };
 
   renderInfoImage = () => {
-    if (this.state.imageDownloadURL == null) {
+    if (this.state.imageDownloadURL !== null) {
       return (
-        <Image
-          style={{ width: "80%", height: "80%" }}
-          source={require("../../images/placeholder.png")}
-        />
+        <ImageZoom
+          cropWidth={350}
+          cropHeight={350}
+          imageWidth={300}
+          imageHeight={300}
+        >
+          <Image
+            source={{ uri: this.state.imageDownloadURL }}
+            style={{ width: 300, height: 300 }}
+          />
+        </ImageZoom>
       );
     } else {
-      return (
-        <Image
-          source={{ uri: this.state.imageDownloadURL }}
-          style={{ width: "80%", height: "80%" }}
-        />
-      );
+      return <Text>No media files stored</Text>;
     }
   };
 
@@ -410,7 +420,9 @@ export default class Map extends Component {
     return (
       <View style={styles.container}>
         <Appbar.Header>
-          <Appbar.Content title="Desk Officer" />
+          {/* <Appbar.Content title="Desk Officer" /> */}
+
+          {/* <MaterialCommunityIcons name="camera" color="white" size={26} /> */}
           <Button
             mode="contained"
             onPress={this.onClickGreen}
@@ -458,10 +470,7 @@ export default class Map extends Component {
 
             {this.state.markerList.map((pin, index) => (
               <Marker
-                onPress={() =>
-                  // this.setState({ selectedMarkerInfo: pin });
-                  this._handleMarkerPress(pin)
-                }
+                onPress={() => this._handleMarkerPress(pin)}
                 key={index}
                 coordinate={{
                   latitude: pin.latitude,
@@ -483,47 +492,50 @@ export default class Map extends Component {
           onSwipeComplete={this._handleAddMarkerBackdropPress}
           onBackdropPress={this._handleAddMarkerBackdropPress}
         >
-          <View style={styles.modalCard}>
-            <View style={{ alignItems: "center", flex: 1 }}>
-              <Button mode="contained" onPress={this._pickImage}>
-                Add image
-              </Button>
-              <View
-                style={{ borderWidth: 3, borderColor: "black", marginTop: 1 }}
-              >
-                {this._renderPickedImage()}
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={styles.container}
+          >
+            <View style={styles.modalCard}>
+              <View style={styles.flex1Container}>
+                {/* <View style={{ alignItems: "center", flex: 1 }}> */}
+                <Button mode="contained" onPress={this._pickImage}>
+                  Add image
+                </Button>
+                <View>{this._renderPickedImage()}</View>
+              </View>
+              {/* </View> */}
+
+              <View style={styles.flex1Container}>
+                <TextInput
+                  mode="outlined"
+                  style={styles.textInput}
+                  label="Location Name"
+                  onChangeText={this._handleInputName}
+                  maxLength={320}
+                />
+
+                <TextInput
+                  mode="outlined"
+                  style={styles.textInput}
+                  multiline={true}
+                  numberOfLines={10}
+                  label="Marker Description"
+                  onChangeText={this._handleInputDescription}
+                  maxLength={1000}
+                  allowFontScaling={true}
+                  blurOnSubmit={true}
+                />
+                <Text>Has the information been verified as correct?</Text>
+              </View>
+
+              <View style={styles.flex1Container}>
+                <Button mode="contained" onPress={this._saveNewMarker}>
+                  Save
+                </Button>
               </View>
             </View>
-
-            <View style={styles.flex1Container}>
-              <TextInput
-                mode="outlined"
-                style={styles.textInput}
-                label="Location Name"
-                onChangeText={this._handleInputName}
-                maxLength={320}
-              />
-
-              <TextInput
-                mode="outlined"
-                style={styles.textInput}
-                multiline={true}
-                numberOfLines={4}
-                label="Marker Description"
-                onChangeText={this._handleInputDescription}
-                maxLength={1000}
-                allowFontScaling={true}
-                blurOnSubmit={true}
-              />
-              <Text>Has the information been verified as correct?</Text>
-            </View>
-
-            <View style={styles.flex1Container}>
-              <Button mode="contained" onPress={this._saveNewMarker}>
-                Save
-              </Button>
-            </View>
-          </View>
+          </KeyboardAvoidingView>
         </Modal>
 
         <Modal
@@ -536,17 +548,26 @@ export default class Map extends Component {
           onSwipeComplete={this._handleInfoBackdropPress}
           onBackdropPress={this._handleInfoBackdropPress}
         >
-          <View style={styles.modalMarkerCard}>
-            <View style={styles.flex1Container}>
+          <View style={styles.infoModalCard}>
+            <View style={styles.infoModalTextContainer}>
               <Title>{this.state.selectedMarkerInfo.name}</Title>
+              <ScrollView style={{ height: 40 }}>
+                <TouchableOpacity>
+                  <Text>{this.state.selectedMarkerInfo.description}</Text>
+                </TouchableOpacity>
+                <Text style={{ marginTop: 10 }}>
+                  Information recorded at
+                  {/* {toDate(this.state.selectedMarkerInfo.timestamp).toDateString()} */}
+                </Text>
+              </ScrollView>
             </View>
-            <View style={styles.flex1Container}>
-              <Text>{this.state.selectedMarkerInfo.description}</Text>
-            </View>
-            <View style={styles.flex3Container}>{this.renderInfoImage()}</View>
-
-            <View style={styles.flex1Container}>
-              <Button mode="contained" onPress={this._handleEditPress}>
+            <View style={styles.flex1Container}>{this.renderInfoImage()}</View>
+            <View style={styles.flexHalfContainer}>
+              <Button
+                style={{ marginTop: 20 }}
+                mode="contained"
+                onPress={this._handleEditPress}
+              >
                 Edit
               </Button>
             </View>
@@ -563,37 +584,42 @@ export default class Map extends Component {
           onSwipeComplete={() => this.setEditModalVisible(false)}
           onBackdropPress={() => this.setEditModalVisible(false)}
         >
-          <View style={styles.modalMarkerCard}>
-            <View style={styles.flex3Container}>
-              <Title>Edit Marker Information</Title>
-              <TextInput
-                mode="outlined"
-                style={styles.textInput}
-                onChangeText={this._handleEditName}
-                maxLength={320}
-                value={this.state.markerEditNameInput}
-              />
-            </View>
-            <View style={styles.flex3Container}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={styles.container}
+          >
+            <View style={styles.editModalCard}>
+              <View style={styles.flex1Container}>
+                <Title>Edit Marker Information</Title>
+                <TextInput
+                  mode="outlined"
+                  style={styles.textInput}
+                  onChangeText={this._handleEditName}
+                  maxLength={320}
+                  value={this.state.markerEditNameInput}
+                />
+              </View>
+
               <TextInput
                 mode="outlined"
                 style={styles.textInput}
                 multiline={true}
-                numberOfLines={4}
+                numberOfLines={10}
                 onChangeText={this._handleEditDescription}
                 maxLength={1000}
                 allowFontScaling={true}
                 blurOnSubmit={true}
                 value={this.state.markerEditDescriptionInput}
               />
-              <Text>Has the information been verified as correct?</Text>
-              <View style={styles.flex3Container}>
+
+              <View style={styles.flex1Container}>
+                <Text>Has the information been verified as correct?</Text>
                 <Button mode="contained" onPress={this._handleEditUpdate}>
                   Save Changes
                 </Button>
               </View>
             </View>
-          </View>
+          </KeyboardAvoidingView>
         </Modal>
       </View>
     );

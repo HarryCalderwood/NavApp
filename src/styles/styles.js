@@ -91,6 +91,8 @@ export const styles = StyleSheet.create({
 
   textInput: {
     width: "90%",
+    marginLeft: 20,
+    marginRight: 20,
   },
 
   backgroundImage: {
@@ -98,6 +100,12 @@ export const styles = StyleSheet.create({
     resizeMode: "cover",
     justifyContent: "center",
     width: "100%",
+  },
+  flexHalfContainer: {
+    flex: 0.7,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   flex1Container: {
@@ -159,6 +167,16 @@ export const styles = StyleSheet.create({
 
   //map tab styles
 
+  infoModalTextContainer: {
+    flex: 1,
+    paddingTop: 30,
+    paddingRight: 10,
+    paddingLeft: 10,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
   infoImage: {
     justifyContent: "center",
     width: 100,
@@ -214,27 +232,30 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  modalCard: {
-    height: "50%",
-    marginTop: "auto",
-    borderColor: "black",
+  infoModalCard: {
+    flex: 1,
+    height: "80%",
+    borderColor: "white",
     borderWidth: 2,
+    marginTop: "20%",
     marginBottom: "10%",
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 10,
   },
 
-  modalMarkerCard: {
-    backgroundColor: "white",
-    height: "50%",
-    padding: 25,
-    marginTop: "auto",
-    borderColor: "grey",
-    borderWidth: 3,
-    marginBottom: "6%",
+  editModalCard: {
+    height: "70%",
+    borderColor: "white",
+    borderWidth: 2,
 
-    borderRadius: 30,
+    marginTop: "20%",
+
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
   },
   // briefing page
 
@@ -242,6 +263,10 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 6,
     marginRight: 10,
+  },
+  briefingCard: {
+    marginBottom: 5,
+    marginTop: 5,
   },
 
   //mapOverlays tab styles

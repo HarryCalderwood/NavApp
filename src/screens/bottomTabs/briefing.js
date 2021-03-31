@@ -69,20 +69,68 @@ export default class Briefing extends Component {
         <View style={styles.flex12Container}>
           <ScrollView>
             {this.state.markerList.map((pin, index) => (
-              <Card key={index} style={{}}>
-                <Card.Title title={pin.name} />
-                <Card.Content>
-                  <Paragraph>{pin.description} </Paragraph>
-                </Card.Content>
-
-                <Card.Actions>
-                  <Button>Edit</Button>
-                </Card.Actions>
-              </Card>
+              <TouchableOpacity>
+                <Card key={index} style={styles.briefingCard}>
+                  <Card.Title title={pin.name} />
+                  <Card.Content>
+                    <Paragraph>{pin.description} </Paragraph>
+                  </Card.Content>
+                </Card>
+              </TouchableOpacity>
             ))}
           </ScrollView>
         </View>
       </View>
     );
   }
+}
+
+{
+  /* <Modal
+          animationType="slide"
+          transparent={true}
+          visible={editModalVisible}
+          animationIn="slideInUp"
+          animationOut="slideOutDown"
+          swipeDirection="down"
+          onSwipeComplete={() => this.setEditModalVisible(false)}
+          onBackdropPress={() => this.setEditModalVisible(false)}
+        >
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={styles.container}
+          >
+            <View style={styles.editModalCard}>
+              <View style={styles.flex1Container}>
+                <Title>Edit Marker Information</Title>
+                <TextInput
+                  mode="outlined"
+                  style={styles.textInput}
+                  onChangeText={this._handleEditName}
+                  maxLength={320}
+                  value={this.state.markerEditNameInput}
+                />
+              </View>
+
+              <TextInput
+                mode="outlined"
+                style={styles.textInput}
+                multiline={true}
+                numberOfLines={10}
+                onChangeText={this._handleEditDescription}
+                maxLength={1000}
+                allowFontScaling={true}
+                blurOnSubmit={true}
+                value={this.state.markerEditDescriptionInput}
+              />
+
+              <View style={styles.flex1Container}>
+                <Text>Has the information been verified as correct?</Text>
+                <Button mode="contained" onPress={this._handleEditUpdate}>
+                  Save Changes
+                </Button>
+              </View>
+            </View>
+          </KeyboardAvoidingView>
+        </Modal> */
 }

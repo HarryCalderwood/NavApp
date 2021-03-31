@@ -72,7 +72,7 @@ createBottomTabs = (props) => {
           tabBarLabel: "Briefing",
           tabBarIcon: ({ theme }) => (
             <MaterialCommunityIcons
-              name="information "
+              name="information"
               color={theme}
               size={26}
             />
