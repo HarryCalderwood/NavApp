@@ -41,10 +41,9 @@ const Login = ({ navigation }) => {
     } else if (!password) {
       Alert.alert("Please enter your password");
     } else {
-      signIn(email, password);
       setEmail("");
       setPassword("");
-      navigation.navigate("Loading");
+      signIn(email, password);
     }
   };
 
@@ -59,13 +58,13 @@ const Login = ({ navigation }) => {
         <View style={styles.center}>
           <View style={styles.flex3Container}>
             <Headline
-              style={{ fontSize: 50, paddingTop: 80, fontWeight: "bold" }}
+              style={{ fontSize: 50, fontWeight: "bold", paddingTop: 60 }}
             >
               Desk Officer
             </Headline>
           </View>
 
-          <View style={styles.flex2Container}>
+          <View style={styles.flex3Container}>
             <TextInput
               mode="outlined"
               style={styles.textInput}
@@ -75,9 +74,7 @@ const Login = ({ navigation }) => {
               textContentType={"emailAddress"}
               maxLength={320}
             />
-          </View>
 
-          <View style={styles.flex2Container}>
             <TextInput
               mode="outlined"
               style={styles.textInput}
@@ -89,7 +86,10 @@ const Login = ({ navigation }) => {
             />
 
             <View style={styles.switchView}>
-              <Text allowFontScaling={true} style={{ marginTop: 8 }}>
+              <Text
+                allowFontScaling={true}
+                style={{ marginRight: 8, marginTop: 10, marginBottom: 30 }}
+              >
                 Show Password
               </Text>
               <Switch

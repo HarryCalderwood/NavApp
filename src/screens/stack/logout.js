@@ -28,7 +28,7 @@ export default class App extends React.Component {
 
     return (
       <Container>
-        <Text>Open up App.js to start working on your app!</Text>
+        <Text>Logging Out</Text>
       </Container>
     );
   }

@@ -4,6 +4,7 @@ import * as FileSystem from "expo-file-system";
 import ImageZoom from "react-native-image-pan-zoom";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
+
 import {
   Alert,
   Stylesheet,
@@ -21,15 +22,7 @@ import { fromJS } from "immutable";
 import { styles } from "../../styles/styles";
 import MapModal from "../../components/modal";
 import * as Index from "../../components/index";
-import {
-  Title,
-  Text,
-  TextInput,
-  Subheading,
-  Button,
-  Appbar,
-  Checkbox,
-} from "react-native-paper";
+import { Title, Text, TextInput, Button, Appbar } from "react-native-paper";
 // import { ScrollView } from "react-native-gesture-handler";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import * as firebase from "firebase";
@@ -149,31 +142,85 @@ export default class Map extends Component {
   }
 
   onClickOverlayOff = () => {
-    this.data = this.data
-
-      // .update("blueStyles", (i) => i.pop())
-      .update("overlays", (i) => i.set(0, overlayOff));
+    this.data = this.data.update("overlays", (i) => i.set(0, overlayOff));
   };
 
   onClickGreen = () => {
-    this.data = this.data
-
-      // .update("blueStyles", (i) => i.pop())
-      .update("overlays", (i) => i.set(0, greenZone));
+    this.data = this.data.update("overlays", (i) => i.set(0, greenZone));
   };
 
   onClickBlue = () => {
-    this.data = this.data
-
-      // .update("greenStyles", (i) => i.pop())
-      .update("overlays", (i) => i.set(0, blueZone));
+    this.data = this.data.update("overlays", (i) => i.set(0, blueZone));
   };
 
   onClickRed = () => {
-    this.data = this.data
+    this.data = this.data.update("overlays", (i) => i.set(0, redZone));
+  };
 
-      // .update("greenStyles", (i) => i.pop())
-      .update("overlays", (i) => i.set(0, redZone));
+  //Camera
+
+  _openCamera = () => {};
+
+  //Modals
+
+  //Add Marker
+
+  addMarkerFunctions = {
+    _handleAddMarkerBackdropPress: () => {
+      this.setAddModalVisible(false);
+      this.setState({ image: "../../images/placeholder.png" });
+      this.setState({ mapPin: null });
+    },
+
+    _pickImage: async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [5, 3],
+        quality: 1,
+      });
+      // console.log(result + "5");
+      if (!result.cancelled) {
+        this.setState({ image: result.uri });
+      }
+    },
+
+    _renderPickedImage: () => {
+      if (this.state.image == null) {
+        return (
+          <Image
+            source={require("../../images/placeholder.png")}
+            style={{ width: 180, height: 180 }}
+          />
+        );
+      } else {
+        return (
+          <Image
+            source={{ uri: this.state.image }}
+            style={{ width: 150, height: 150 }}
+          />
+        );
+      }
+    },
+    _handleInputName: (text) => {
+      this.setState({ mapPinName: text });
+    },
+    _handleInputDescription: (text) => {
+      this.setState({ mapPinDescription: text });
+    },
+    _saveNewMarker: async () => {
+      this.setAddModalVisible(false);
+      await this.uploadImage(this.state.image);
+
+      addNewMarker(
+        this.state.mapPinName,
+        this.state.mapPinDescription,
+        this.state.mapPin.latitude,
+        this.state.mapPin.longitude,
+        firebase.firestore.FieldValue.serverTimestamp(),
+        this.state.imagePath
+      );
+    },
   };
 
   setAddModalVisible = (visible) => {
@@ -204,9 +251,9 @@ export default class Map extends Component {
   };
 
   _handleAddMarkerBackdropPress = () => {
+    this.setAddModalVisible(false);
     this.setState({ image: "../../images/placeholder.png" });
     this.setState({ mapPin: null });
-    this.setAddModalVisible(false);
   };
 
   _handleInfoBackdropPress = () => {
@@ -225,12 +272,16 @@ export default class Map extends Component {
   };
 
   _handleEditPress = () => {
+    this._handleInfoBackdropPress;
     this.setEditModalVisible(true);
-    this.setInfoModalVisible(false);
     this.setState({ markerEditNameInput: this.state.selectedMarkerInfo.name });
     this.setState({
       markerEditDescriptionInput: this.state.selectedMarkerInfo.description,
     });
+  };
+
+  _handleEditBackdropPress = () => {
+    this.setState({ editModalVisible: false });
   };
 
   _handleEditName = (text) => {
@@ -242,7 +293,6 @@ export default class Map extends Component {
   };
 
   _handleEditUpdate = () => {
-    // console.log(this.state.selectedMarkerInfo + "2");
     updateMarkers(
       this.state.selectedMarkerInfo.id,
       this.state.markerEditNameInput,
@@ -291,7 +341,7 @@ export default class Map extends Component {
     const response = await fetch(uri);
     const blob = await response.blob();
     var storageRef = firebase.storage().ref();
-    const imgUploadID = Math.floor(Math.random() * Math.floor(10000000));
+    const imgUploadID = Math.floor(Math.random() * Math.floor(10000000000));
     var imgRef = storageRef.child("" + imgUploadID + "");
 
     var fileName = imgRef.name;
@@ -334,17 +384,10 @@ export default class Map extends Component {
   renderInfoImage = () => {
     if (this.state.imageDownloadURL !== null) {
       return (
-        <ImageZoom
-          cropWidth={350}
-          cropHeight={350}
-          imageWidth={300}
-          imageHeight={300}
-        >
-          <Image
-            source={{ uri: this.state.imageDownloadURL }}
-            style={{ width: 300, height: 300 }}
-          />
-        </ImageZoom>
+        <Image
+          source={{ uri: this.state.imageDownloadURL }}
+          style={{ width: 300, height: 300 }}
+        />
       );
     } else {
       return <Text>No media files stored</Text>;
@@ -419,26 +462,39 @@ export default class Map extends Component {
 
     return (
       <View style={styles.container}>
-        <Appbar.Header>
+        <Appbar.Header style={{ height: 45 }}>
           {/* <Appbar.Content title="Desk Officer" /> */}
-
-          {/* <MaterialCommunityIcons name="camera" color="white" size={26} /> */}
-          <Button
-            mode="contained"
-            onPress={this.onClickGreen}
-            title="Blue Zone"
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Camera");
+            }}
           >
-            Green Zone
-          </Button>
-          <Button mode="contained" onPress={this.onClickBlue}>
-            Blue Zone
-          </Button>
-          <Button mode="contained" onPress={this.onClickRed}>
-            Red Zone
-          </Button>
-          <Button mode="contained" onPress={this.onClickOverlayOff}>
-            Clear
-          </Button>
+            <MaterialCommunityIcons
+              name="camera"
+              color="white"
+              size={30}
+              style={{ marginLeft: 15, marginRight: 15 }}
+            />
+          </TouchableOpacity>
+
+          <ScrollView>
+            <Button
+              mode="contained"
+              onPress={this.onClickGreen}
+              title="Blue Zone"
+            >
+              Green Zone
+            </Button>
+            <Button mode="contained" onPress={this.onClickBlue}>
+              Blue Zone
+            </Button>
+            <Button mode="contained" onPress={this.onClickRed}>
+              Red Zone
+            </Button>
+            <Button mode="contained" onPress={this.onClickOverlayOff}>
+              Clear
+            </Button>
+          </ScrollView>
           <Appbar.Action icon="logout" onPress={this.logoutAlert} />
         </Appbar.Header>
 
@@ -481,30 +537,43 @@ export default class Map extends Component {
             {this.state.mapPin && <Marker coordinate={this.state.mapPin} />}
           </MapView>
         </View>
+        {/* <Index.AddMarkerModal
+          functions={this.addMarkerFunctions}
+          addMarkerURI={this.state.image}
+          modalVisible={this.state.addModalVisible}
+        /> */}
 
         <Modal
           animationType="slide"
           transparent={true}
           visible={addModalVisible}
-          animationIn="slideInUp"
-          animationOut="slideOutDown"
-          swipeDirection="down"
-          onSwipeComplete={this._handleAddMarkerBackdropPress}
           onBackdropPress={this._handleAddMarkerBackdropPress}
         >
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}
           >
-            <View style={styles.modalCard}>
-              <View style={styles.flex1Container}>
-                {/* <View style={{ alignItems: "center", flex: 1 }}> */}
-                <Button mode="contained" onPress={this._pickImage}>
+            <View style={styles.addModalCard}>
+              <View style={{ marginRight: "60%", marginTop: 10 }}>
+                <TouchableOpacity onPress={this._handleAddMarkerBackdropPress}>
+                  <MaterialCommunityIcons
+                    name="arrow-left"
+                    color="black"
+                    size={30}
+                    style={{ marginLeft: 15, marginRight: 15 }}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View>
+                <Button
+                  style={{ marginBottom: 20 }}
+                  mode="contained"
+                  onPress={this._pickImage}
+                >
                   Add image
                 </Button>
-                <View>{this._renderPickedImage()}</View>
+                <View style={{}}>{this._renderPickedImage()}</View>
               </View>
-              {/* </View> */}
 
               <View style={styles.flex1Container}>
                 <TextInput
@@ -526,10 +595,9 @@ export default class Map extends Component {
                   allowFontScaling={true}
                   blurOnSubmit={true}
                 />
-                <Text>Has the information been verified as correct?</Text>
               </View>
 
-              <View style={styles.flex1Container}>
+              <View style={{ marginTop: 30, marginBottom: 20 }}>
                 <Button mode="contained" onPress={this._saveNewMarker}>
                   Save
                 </Button>
@@ -542,16 +610,18 @@ export default class Map extends Component {
           animationType="slide"
           transparent={true}
           visible={infoModalVisible}
-          animationIn="slideInUp"
-          animationOut="slideOutDown"
-          swipeDirection="down"
-          onSwipeComplete={this._handleInfoBackdropPress}
+          // animationIn="slide"
+          // animationOut="slideOutDown"
+          // swipeDirection="down"
+          // onSwipeComplete={this._handleInfoBackdropPress}
+
           onBackdropPress={this._handleInfoBackdropPress}
         >
           <View style={styles.infoModalCard}>
+            <Index.BackButton method={this._handleInfoBackdropPress} />
             <View style={styles.infoModalTextContainer}>
               <Title>{this.state.selectedMarkerInfo.name}</Title>
-              <ScrollView style={{ height: 40 }}>
+              <ScrollView style={{ height: "60%" }}>
                 <TouchableOpacity>
                   <Text>{this.state.selectedMarkerInfo.description}</Text>
                 </TouchableOpacity>
@@ -578,17 +648,20 @@ export default class Map extends Component {
           animationType="slide"
           transparent={true}
           visible={editModalVisible}
-          animationIn="slideInUp"
+          animationIn="none"
           animationOut="slideOutDown"
           swipeDirection="down"
-          onSwipeComplete={() => this.setEditModalVisible(false)}
-          onBackdropPress={() => this.setEditModalVisible(false)}
+          scrollOffset="1"
+          onSwipeComplete={() => this._handleEditBackdropPress}
+          onBackdropPress={() => this._handleEditBackdropPress}
         >
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}
           >
             <View style={styles.editModalCard}>
+              <Index.BackButton method={this._handleEditBackdropPress} />
+
               <View style={styles.flex1Container}>
                 <Title>Edit Marker Information</Title>
                 <TextInput

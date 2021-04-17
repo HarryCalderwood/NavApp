@@ -5,6 +5,17 @@ import AvatarText from "./avatarText";
 import AppBarHeader from "./appBarHeader";
 import BottomCard from "./bottomCard";
 import InputTextField from "./inputTextFeild";
+import BackButton from "./BackButton";
+import AddMarkerModal from "./AddMarkerModal";
 
-
-export { Input, CameraButton, MapModal, AvatarText, AppBarHeader, BottomCard, InputTextField };
+export {
+  AddMarkerModal,
+  BackButton,
+  Input,
+  CameraButton,
+  MapModal,
+  AvatarText,
+  AppBarHeader,
+  BottomCard,
+  InputTextField,
+};

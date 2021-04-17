@@ -5,6 +5,7 @@ import { Title, Text } from "react-native-paper";
 import { styles } from "../../styles/styles";
 
 export default function LoadingScreen({ navigation }) {
+  // setTimeout(1000);
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {

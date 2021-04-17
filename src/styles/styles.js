@@ -35,6 +35,9 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: "5%",
   },
+  buttonContainer: {
+    width: "100%",
+  },
 
   inputText: {
     height: "20%",
@@ -93,6 +96,7 @@ export const styles = StyleSheet.create({
     width: "90%",
     marginLeft: 20,
     marginRight: 20,
+    marginBottom: 5,
   },
 
   backgroundImage: {
@@ -245,6 +249,19 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
+  addModalCard: {
+    flex: 1,
+    height: "80%",
+    borderColor: "white",
+    borderWidth: 2,
+    marginTop: "20%",
+    marginBottom: "10%",
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+  },
+
   editModalCard: {
     height: "70%",
     borderColor: "white",
@@ -307,9 +324,41 @@ export const styles = StyleSheet.create({
 
   //Camera
 
-  camera: {},
+  cameraFlipButton: {
+    bottom: 0,
+    position: "absolute",
+    paddingBottom: 50,
+    paddingLeft: 30,
+  },
+
+  cameraContainer: {
+    flex: 1,
+    width: "100%",
+  },
 
   //Settings
+
+  settingsModalCard: {
+    flex: 1,
+    height: "50%",
+    borderColor: "white",
+    borderWidth: 2,
+    marginTop: "5%",
+    backgroundColor: "white",
+    // justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+  },
+
+  settingsInfo: {
+    borderRadius: 10,
+    width: 400,
+    margin: 20,
+    height: 300,
+    padding: 40,
+    borderColor: "black",
+    borderWidth: 3,
+  },
 
   optionRow: {
     borderBottomColor: "black",

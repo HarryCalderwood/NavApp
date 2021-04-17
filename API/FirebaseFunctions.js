@@ -86,3 +86,21 @@ export async function updateMarkers(id, name, description, timestamp) {
       console.error("Error writing document: ", error);
     });
 }
+
+export async function getUserInfo(user) {
+  var loggedInUser = user;
+  var email;
+
+  if (loggedInUser != null) {
+    email = user.email;
+
+    // The user's ID, unique to the Firebase project. Do NOT use
+    // this value to authenticate with your backend server, if
+    // you have one. Use User.getToken() instead.
+  }
+  return (
+    <View>
+      <Text> User email: {email}</Text>
+    </View>
+  );
+}

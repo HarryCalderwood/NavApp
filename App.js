@@ -1,10 +1,11 @@
 import React, { useState, Component, useEffect, useDebugValue } from "react";
 import AsyncStorage from "@react-native-community/async-storage";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { LogBox } from "react-native";
-import { createStore } from "redux";
+import { Switch } from "react-native-paper";
+// import store from "./store/store";
+
 import { Provider } from "react-redux";
-import { YellowBox } from "react-native";
+
 console.disableYellowBox = true;
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import SplashScreen from "react-native-splash-screen";
@@ -20,6 +21,7 @@ import LoadingScreen from "./src/screens/stack/LoadingScreen";
 import ForgotPassword from "./src/screens/stack/ForgotPassword";
 import DataUpload from "./src/screens/stack/DataUpload";
 import AppCamera from "./src/screens/bottomTabs/AppCamera";
+import Camera from "./src/screens/stack/camera";
 
 import Map from "./src/screens/bottomTabs/map";
 import Settings from "./src/screens/bottomTabs/Settings";
@@ -47,19 +49,31 @@ const theme = {
   },
 };
 
-createBottomTabs = (props) => {
+const themeSwitch = () => {
+  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
+
+  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
+
+  return <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />;
+
+  if (isSwitchOn) {
+    console.log("on");
+  }
+};
+
+bottomTabNavigator = (props) => {
   return (
     <MaterialBottomTabs.Navigator
       initialRouteName="Map"
-      activeColor="#f0edf6"
-      inactiveColor="#3e2465"
-      barStyle={{ backgroundColor: "#EB4D4B" }}
+      // activeColor="black"
+      // inactiveColor="grey"
+      // barStyle={{ backgroundColor: "white" }}
     >
       <MaterialBottomTabs.Screen
         name="Map"
         component={Map}
         options={{
-          tabBarLabel: "Explore",
+          tabBarLabel: "Map",
           tabBarIcon: ({ theme }) => (
             <MaterialCommunityIcons name="map-marker" color={theme} size={26} />
           ),
@@ -79,7 +93,7 @@ createBottomTabs = (props) => {
           ),
         }}
       />
-      <MaterialBottomTabs.Screen
+      {/* <MaterialBottomTabs.Screen
         name="AppCamera"
         component={AppCamera}
         visable={false}
@@ -89,7 +103,7 @@ createBottomTabs = (props) => {
             <MaterialCommunityIcons name="camera" color={theme} size={26} />
           ),
         }}
-      />
+      /> */}
       <MaterialBottomTabs.Screen
         name="Settings"
         component={Settings}
@@ -154,10 +168,20 @@ export default function App() {
               headerShown: true,
             }}
           />
+          <Stack.Screen
+            name="Camera"
+            component={Camera}
+            options={{
+              title: "",
+              headerStyle: { backgroundColor: "black" },
+              headerTintColor: "white",
+              headerShown: true,
+            }}
+          />
 
           <Stack.Screen
             name="Map"
-            component={createBottomTabs}
+            component={bottomTabNavigator}
             options={{
               gestureEnabled: false,
               title: "Map",

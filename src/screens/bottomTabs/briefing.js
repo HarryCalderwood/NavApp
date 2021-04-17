@@ -58,7 +58,7 @@ export default class Briefing extends Component {
 
     return (
       <View style={styles.container}>
-        <Appbar.Header>
+        <Appbar.Header style={{ height: 35 }}>
           <Appbar.Content title="" />
           {/* <Button mode="contained">Blue Zone</Button>
           <Button mode="contained">Green Zone</Button>
