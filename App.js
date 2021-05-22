@@ -20,11 +20,11 @@ import Logout from "./src/screens/stack/logout";
 import LoadingScreen from "./src/screens/stack/LoadingScreen";
 import ForgotPassword from "./src/screens/stack/ForgotPassword";
 import DataUpload from "./src/screens/stack/DataUpload";
-import AppCamera from "./src/screens/bottomTabs/AppCamera";
+
 import Camera from "./src/screens/stack/camera";
 
 import Map from "./src/screens/bottomTabs/map";
-import Settings from "./src/screens/bottomTabs/Settings";
+import Settings from "./src/screens/bottomTabs/settings";
 import Briefing from "./src/screens/bottomTabs/briefing";
 
 import Tab1 from "./src/screens/topTabs/tab1";
@@ -51,11 +51,8 @@ const theme = {
 
 const themeSwitch = () => {
   const [isSwitchOn, setIsSwitchOn] = React.useState(false);
-
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
-
   return <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />;
-
   if (isSwitchOn) {
     console.log("on");
   }

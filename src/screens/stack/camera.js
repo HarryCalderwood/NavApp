@@ -21,9 +21,10 @@ export default function camera({ navigation }) {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+
   return (
     <View style={styles.cameraContainer}>
-      <Camera style={{ flex: 1 }} type={type}>
+      <Camera style={{ flex: 1, flexDirection: "column" }} type={type}>
         <View style={styles.cameraFlipButton}>
           <TouchableOpacity
             onPress={() => {
@@ -37,8 +38,17 @@ export default function camera({ navigation }) {
             <MaterialCommunityIcons
               name="camera-switch"
               color="white"
-              size={30}
-              style={{ marginLeft: 15, marginRight: 15 }}
+              size={40}
+              style={{ marginLeft: 30, marginTop: "0%" }}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <MaterialCommunityIcons
+              name="panorama-fisheye"
+              color="white"
+              size={80}
+              style={{ marginLeft: "55%" }}
             />
           </TouchableOpacity>
         </View>

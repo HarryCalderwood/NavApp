@@ -1,24 +1,17 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { PureComponent } from "react";
 import { TouchableOpacity, ScrollView, View, Alert } from "react-native";
-import { SafeAreaView } from "react-navigation";
 import * as firebase from "firebase";
 import { loggingOut } from "../../../API/FirebaseFunctions";
 import { styles } from "../../styles/styles";
-import { FontAwesome5 } from "@expo/vector-icons";
-import {
-  Card,
-  Title,
-  Paragraph,
-  Text,
-  Appbar,
-  Button,
-} from "react-native-paper";
 
-export default class Briefing extends Component {
+import { Card, Button, Paragraph, Appbar } from "react-native-paper";
+
+export default class Briefing extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
+      isMounted: false,
       markerList: [],
       card: [],
     };
@@ -51,18 +44,41 @@ export default class Briefing extends Component {
         });
       });
   }
+  //Alternative component mounting method:
+  // loadFirebaseData(async) {
+  //   // isMounted = true;
+  //   var db = firebase.firestore();
+  //   const markers = [];
+  //   db.collection("mapMarker")
+  //     .get()
+  //     .then((snapshot) => {
+  //       snapshot.docs.forEach((marker) => {
+  //         let currentID = marker.id;
+  //         let obj = { ...marker.data(), ["id"]: currentID };
+  //         markers.push(obj);
+  //       });
+  //       // if (this.isMounted) {
+  //       this.setState({
+  //         markerList: markers,
+  //       });
+  //       // }
+  //     });
+  // }
 
   render() {
     const { navigation } = this.props;
-    this.componentDidMount();
-
+    // this.loadFirebaseData();
     return (
       <View style={styles.container}>
         <Appbar.Header style={{ height: 35 }}>
-          <Appbar.Content title="" />
-          {/* <Button mode="contained">Blue Zone</Button>
-          <Button mode="contained">Green Zone</Button>
-          <Button mode="contained">Red Zone</Button> */}
+          <ScrollView>
+            <Button mode="contained" title="Blue Zone">
+              Green Zone
+            </Button>
+            <Button mode="contained">Blue Zone</Button>
+            <Button mode="contained">Red Zone</Button>
+            <Button mode="contained">Clear</Button>
+          </ScrollView>
           <Appbar.Action icon="logout" onPress={this.logoutAlert} />
         </Appbar.Header>
 
@@ -83,54 +99,4 @@ export default class Briefing extends Component {
       </View>
     );
   }
-}
-
-{
-  /* <Modal
-          animationType="slide"
-          transparent={true}
-          visible={editModalVisible}
-          animationIn="slideInUp"
-          animationOut="slideOutDown"
-          swipeDirection="down"
-          onSwipeComplete={() => this.setEditModalVisible(false)}
-          onBackdropPress={() => this.setEditModalVisible(false)}
-        >
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.container}
-          >
-            <View style={styles.editModalCard}>
-              <View style={styles.flex1Container}>
-                <Title>Edit Marker Information</Title>
-                <TextInput
-                  mode="outlined"
-                  style={styles.textInput}
-                  onChangeText={this._handleEditName}
-                  maxLength={320}
-                  value={this.state.markerEditNameInput}
-                />
-              </View>
-
-              <TextInput
-                mode="outlined"
-                style={styles.textInput}
-                multiline={true}
-                numberOfLines={10}
-                onChangeText={this._handleEditDescription}
-                maxLength={1000}
-                allowFontScaling={true}
-                blurOnSubmit={true}
-                value={this.state.markerEditDescriptionInput}
-              />
-
-              <View style={styles.flex1Container}>
-                <Text>Has the information been verified as correct?</Text>
-                <Button mode="contained" onPress={this._handleEditUpdate}>
-                  Save Changes
-                </Button>
-              </View>
-            </View>
-          </KeyboardAvoidingView>
-        </Modal> */
 }

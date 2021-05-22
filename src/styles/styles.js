@@ -333,7 +333,7 @@ export const styles = StyleSheet.create({
 
   cameraContainer: {
     flex: 1,
-    width: "100%",
+    flexDirection: "column",
   },
 
   //Settings

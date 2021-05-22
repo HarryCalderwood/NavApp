@@ -7,20 +7,16 @@ import { useSelector, useDispatch } from "react-redux";
 
 import {
   Alert,
-  Stylesheet,
-  Keyboard,
   TouchableOpacity,
   Image,
   View,
-  Dimensions,
   KeyboardAvoidingView,
-  TouchableWithoutFeedback,
   Platform,
 } from "react-native";
-import Carousel from "react-native-snap-carousel";
+
 import { fromJS } from "immutable";
 import { styles } from "../../styles/styles";
-import MapModal from "../../components/modal";
+
 import * as Index from "../../components/index";
 import { Title, Text, TextInput, Button, Appbar } from "react-native-paper";
 // import { ScrollView } from "react-native-gesture-handler";
@@ -32,9 +28,6 @@ import {
   updateMarkers,
 } from "../../../API/FirebaseFunctions";
 import Modal from "react-native-modal";
-import { moderateScale } from "react-native-size-matters";
-import { LocalHospital } from "@material-ui/icons";
-import AppCamera from "./AppCamera";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import { ScrollView } from "react-native-gesture-handler";
@@ -157,14 +150,6 @@ export default class Map extends Component {
     this.data = this.data.update("overlays", (i) => i.set(0, redZone));
   };
 
-  //Camera
-
-  _openCamera = () => {};
-
-  //Modals
-
-  //Add Marker
-
   addMarkerFunctions = {
     _handleAddMarkerBackdropPress: () => {
       this.setAddModalVisible(false);
@@ -176,10 +161,9 @@ export default class Map extends Component {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
-        aspect: [5, 3],
+        aspect: [3, 5],
         quality: 1,
       });
-      // console.log(result + "5");
       if (!result.cancelled) {
         this.setState({ image: result.uri });
       }
@@ -239,7 +223,7 @@ export default class Map extends Component {
     Alert.alert("Log out", "Do you want to log out?", [
       {
         text: "Cancel",
-        // onPress: () => console.log("Cancel Pressed"),
+
         style: "cancel",
       },
       { text: "Yes", onPress: () => loggingOut() },
@@ -303,10 +287,6 @@ export default class Map extends Component {
   };
 
   _handleMarkerPress = (pin) => {
-    // this.map.animateCamera(
-    //   { center: pin.latitude & pin.longitude },
-    //   { duration: 2000 }
-    // );
     this.setState({ selectedMarkerInfo: pin });
     this.setState({ infoModalVisible: true });
     var imgLocation = pin.imagePath;
@@ -329,7 +309,6 @@ export default class Map extends Component {
               break;
             case "storage/canceled":
               break;
-
             case "storage/unknown":
               break;
           }
@@ -352,16 +331,13 @@ export default class Map extends Component {
 
   requestPermission = async () => {
     if (Platform.OS !== "web") {
-      const {
-        status,
-      } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== "granted") {
-        alert("Sorry, we need camera roll permissions to make this work!");
+        alert("You have denied consent to access media library.");
       }
     }
   };
-
-  //  {/* {this.state.image && ( */}
 
   _renderPickedImage = () => {
     if (this.state.image == null) {
@@ -401,7 +377,7 @@ export default class Map extends Component {
       aspect: [5, 3],
       quality: 1,
     });
-    // console.log(result + "5");
+
     if (!result.cancelled) {
       this.setState({ image: result.uri });
     }
@@ -431,13 +407,12 @@ export default class Map extends Component {
       firebase.firestore.FieldValue.serverTimestamp(),
       this.state.imagePath
     );
-    // console.log("Save path" + this.state.imagePath);
-    // console.log("new marker added");
   };
 
   componentDidMount() {
     var db = firebase.firestore();
     const markers = [];
+
     db.collection("mapMarker")
       .get()
       .then((snapshot) => {
@@ -458,12 +433,10 @@ export default class Map extends Component {
     const { addModalVisible } = this.state;
     const { infoModalVisible } = this.state;
     const { editModalVisible } = this.state;
-    this.componentDidMount();
 
     return (
       <View style={styles.container}>
         <Appbar.Header style={{ height: 45 }}>
-          {/* <Appbar.Content title="Desk Officer" /> */}
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Camera");
@@ -537,7 +510,8 @@ export default class Map extends Component {
             {this.state.mapPin && <Marker coordinate={this.state.mapPin} />}
           </MapView>
         </View>
-        {/* <Index.AddMarkerModal
+        {/* 
+        <Index.AddMarkerModal
           functions={this.addMarkerFunctions}
           addMarkerURI={this.state.image}
           modalVisible={this.state.addModalVisible}
@@ -610,11 +584,6 @@ export default class Map extends Component {
           animationType="slide"
           transparent={true}
           visible={infoModalVisible}
-          // animationIn="slide"
-          // animationOut="slideOutDown"
-          // swipeDirection="down"
-          // onSwipeComplete={this._handleInfoBackdropPress}
-
           onBackdropPress={this._handleInfoBackdropPress}
         >
           <View style={styles.infoModalCard}>
@@ -684,7 +653,6 @@ export default class Map extends Component {
                 blurOnSubmit={true}
                 value={this.state.markerEditDescriptionInput}
               />
-
               <View style={styles.flex1Container}>
                 <Text>Has the information been verified as correct?</Text>
                 <Button mode="contained" onPress={this._handleEditUpdate}>
