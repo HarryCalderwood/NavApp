@@ -8,6 +8,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Linking,
 } from "react-native";
 import { styles } from "../../styles/styles";
 import MapModal from "../../components/modal";
@@ -87,6 +88,7 @@ const Register = ({ navigation }) => {
                 onChangeText={(name) => setFirstName(name)}
                 value={firstName}
                 allowFontScaling={true}
+                maxLength={40}
               />
             </View>
             <View style={styles.flex2Container}>
@@ -97,6 +99,7 @@ const Register = ({ navigation }) => {
                 value={lastName}
                 onChangeText={(name) => setLastName(name)}
                 allowFontScaling={true}
+                maxLength={50}
               />
             </View>
             <View style={styles.flex2Container}>
@@ -143,7 +146,7 @@ const Register = ({ navigation }) => {
                   style={{ color: "blue" }}
                   onPress={() =>
                     Linking.openURL(
-                      "https://termly.io/resources/templates/terms-and-conditions-template/"
+                      "https://www.termsfeed.com/blog/sample-terms-and-conditions-template/"
                     )
                   }
                 >

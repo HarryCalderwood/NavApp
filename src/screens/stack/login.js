@@ -1,29 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Keyboard,
   Alert,
-  SafeAreaView,
-  TouchableOpacity,
-  StatusBar,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
-  ImageBackground,
 } from "react-native";
-import { styles } from "../../styles/styles";
-import MapModal from "../../components/modal";
-import * as Index from "../../components/index";
-import {
-  Title,
-  Text,
-  Subheading,
-  TextInput,
-  Switch,
-  Button,
-  Headline,
-} from "react-native-paper";
 
-import { moderateScale } from "react-native-size-matters";
+import { styles } from "../../styles/styles";
+import { Text, TextInput, Switch, Button, Headline } from "react-native-paper";
 import { signIn } from "../../../API/FirebaseFunctions";
 
 const Login = ({ navigation }) => {
@@ -93,6 +78,7 @@ const Login = ({ navigation }) => {
                 Show Password
               </Text>
               <Switch
+                style={{ marginBottom: 20 }}
                 value={hidePassword}
                 label="Show Password"
                 onValueChange={onPasswordSwitch}

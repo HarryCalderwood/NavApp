@@ -195,6 +195,7 @@ export default class Map extends Component {
         firebase.firestore.FieldValue.serverTimestamp(),
         this.state.imagePath
       );
+      console.log("New marker Added");
     },
   };
 
@@ -230,14 +231,14 @@ export default class Map extends Component {
     this.setState({ mapPin: null });
   };
 
-  _handleInfoBackdropPress = () => {
-    this.setInfoModalVisible(false);
-    this.setState({ imageDownloadURL: null });
-  };
-
   _handleLogoutPress = () => {
     loggingOut();
     navigation.replace("Login");
+  };
+
+  _handleInfoBackdropPress = () => {
+    this.setInfoModalVisible(false);
+    this.setState({ imageDownloadURL: null });
   };
 
   _handleLongMarkerPress = (e) => {
@@ -246,7 +247,8 @@ export default class Map extends Component {
   };
 
   _handleEditPress = () => {
-    this._handleInfoBackdropPress;
+    this.setState({ imageDownloadURL: null });
+    this.setState({ infoModalVisible: false });
     this.setEditModalVisible(true);
     this.setState({ markerEditNameInput: this.state.selectedMarkerInfo.name });
     this.setState({
@@ -399,22 +401,27 @@ export default class Map extends Component {
     );
   };
 
+  _unsubscribeLogout = () => {
+    var unsubscribe = db.collection("mapMarkers").onSnapshot(() => {
+      console.log("logout");
+    });
+  };
+
   componentDidMount() {
     var db = firebase.firestore();
-    const markers = [];
 
-    db.collection("mapMarker")
-      .get()
-      .then((snapshot) => {
-        snapshot.docs.forEach((marker) => {
-          let currentID = marker.id;
-          let obj = { ...marker.data(), ["id"]: currentID };
-          markers.push(obj);
-        });
-        this.setState({
-          markerList: markers,
-        });
+    db.collection("mapMarker").onSnapshot((querySnapshot) => {
+      var markerData = [];
+
+      querySnapshot.forEach((doc) => {
+        let currentID = doc.id;
+        let obj = { ...doc.data(), ["id"]: currentID };
+        markerData.push(obj);
       });
+      this.setState({
+        markerList: markerData,
+      });
+    });
   }
 
   render() {
@@ -426,7 +433,7 @@ export default class Map extends Component {
 
     return (
       <View style={styles.container}>
-        <Appbar.Header style={{ height: 45 }}>
+        <Appbar.Header style={{ height: 38 }}>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Camera");
@@ -443,19 +450,36 @@ export default class Map extends Component {
           <ScrollView>
             <Button
               mode="contained"
+              style={{ height: 40 }}
+              onPress={this.onClickOverlayOff}
+            >
+              Overlay Off
+            </Button>
+            <Button
+              mode="contained"
               onPress={this.onClickGreen}
-              title="Blue Zone"
+              style={{
+                height: 40,
+                backgroundColor: "#5dd48d",
+                justifyContent: "center",
+              }}
+              title="Green Zone"
             >
               Green Zone
             </Button>
-            <Button mode="contained" onPress={this.onClickBlue}>
+            <Button
+              mode="contained"
+              style={{ height: 40, backgroundColor: "#244fd1" }}
+              onPress={this.onClickBlue}
+            >
               Blue Zone
             </Button>
-            <Button mode="contained" onPress={this.onClickRed}>
+            <Button
+              mode="contained"
+              style={{ height: 40, backgroundColor: "#c42b1a" }}
+              onPress={this.onClickRed}
+            >
               Red Zone
-            </Button>
-            <Button mode="contained" onPress={this.onClickOverlayOff}>
-              Clear
             </Button>
           </ScrollView>
           <Appbar.Action icon="logout" onPress={this.logoutAlert} />
@@ -545,7 +569,7 @@ export default class Map extends Component {
                   style={styles.textInput}
                   label="Location Name"
                   onChangeText={this._handleInputName}
-                  maxLength={320}
+                  maxLength={400}
                 />
 
                 <TextInput
@@ -555,7 +579,7 @@ export default class Map extends Component {
                   numberOfLines={10}
                   label="Marker Description"
                   onChangeText={this._handleInputDescription}
-                  maxLength={1000}
+                  maxLength={1500}
                   allowFontScaling={true}
                   blurOnSubmit={true}
                 />
@@ -610,7 +634,6 @@ export default class Map extends Component {
           animationIn="none"
           animationOut="slideOutDown"
           swipeDirection="down"
-          scrollOffset="1"
           onSwipeComplete={() => this._handleEditBackdropPress}
           onBackdropPress={() => this._handleEditBackdropPress}
         >

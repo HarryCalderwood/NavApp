@@ -58,6 +58,16 @@ export default class Settings extends Component {
     },
   };
 
+  logoutAlert = () => {
+    Alert.alert("Log out", "Do you want to log out?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      { text: "Yes", onPress: () => loggingOut() },
+    ]);
+  };
+
   componentDidMount() {
     var user = firebase.auth().currentUser;
     var loggedInUser = user;
@@ -80,8 +90,9 @@ export default class Settings extends Component {
 
     return (
       <View style={styles.container}>
-        <Appbar.Header>
+        <Appbar.Header style={{ height: 45 }}>
           <Appbar.Content style={{ alignItems: "center" }} title="Settings" />
+          <Appbar.Action icon="logout" onPress={this.logoutAlert} />
         </Appbar.Header>
         <TouchableOpacity onPress={this._handleProfilePress}>
           <Surface style={styles.surface}>
@@ -121,10 +132,10 @@ export default class Settings extends Component {
 
             <View style={styles.settingsInfo}>
               <ScrollView style={{ height: "80%" }}>
-                <Title>Name</Title>
-                <Text style={{ marginBottom: 20 }}>
+                {/* <Title>Name</Title> */}
+                {/* <Text style={{ marginBottom: 20 }}>
                   {this.state.userFirstName} {this.state.userLastName}
-                </Text>
+                </Text> */}
                 <Title>Email Address</Title>
                 <Text style={{ marginBottom: 20 }}>{this.state.userEmail}</Text>
                 <Title>You are a member of MOD Surveillance Map</Title>

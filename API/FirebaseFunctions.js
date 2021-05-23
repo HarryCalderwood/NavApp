@@ -28,6 +28,12 @@ export async function signIn(email, password) {
 
 export async function loggingOut() {
   try {
+    firebase
+      .firestore()
+      .collection("mapMarkers")
+      .onSnapshot(() => {
+        console.log("logout");
+      });
     await firebase.auth().signOut();
   } catch (err) {
     Alert.alert("There is something wrong!", err.message);
@@ -37,9 +43,14 @@ export async function loggingOut() {
 export async function forgotPassword(Email) {
   try {
     firebase.auth().sendPasswordResetEmail(Email);
-    Alert.alert("Please check your email for password reset information");
+    Alert.alert(
+      "If your email address is registered you will recieved an email containing a password reset"
+    );
   } catch (err) {
-    Alert.alert("There is something wrong!", err.message);
+    Alert.alert(
+      "We are very sorry. There has been an error. We are working hard to resolve this.",
+      err.message
+    );
   }
 }
 

@@ -263,7 +263,7 @@ export const styles = StyleSheet.create({
   },
 
   editModalCard: {
-    height: "70%",
+    height: "80%",
     borderColor: "white",
     borderWidth: 2,
 

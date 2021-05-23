@@ -21,6 +21,7 @@ const ForgotPassword = ({ navigation }) => {
       Alert.alert("Please enter your registered email address");
     } else {
       forgotPassword(email);
+      navigation.navigate("Login");
     }
   };
 
