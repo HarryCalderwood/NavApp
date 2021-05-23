@@ -7,9 +7,13 @@ import BottomCard from "./bottomCard";
 import InputTextField from "./inputTextFeild";
 import BackButton from "./BackButton";
 import AddMarkerModal from "./AddMarkerModal";
+import SignInDetailsModal from "./SignInDetailsModal";
+import PrivacyModal from "./PrivacyModal";
 
 export {
+  PrivacyModal,
   AddMarkerModal,
+  SignInDetailsModal,
   BackButton,
   Input,
   CameraButton,

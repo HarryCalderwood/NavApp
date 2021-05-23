@@ -1,9 +1,6 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { Component } from "react";
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from "react-native-maps";
-import * as FileSystem from "expo-file-system";
-import ImageZoom from "react-native-image-pan-zoom";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useSelector, useDispatch } from "react-redux";
 
 import {
   Alert,
@@ -16,11 +13,8 @@ import {
 
 import { fromJS } from "immutable";
 import { styles } from "../../styles/styles";
-
 import * as Index from "../../components/index";
 import { Title, Text, TextInput, Button, Appbar } from "react-native-paper";
-// import { ScrollView } from "react-native-gesture-handler";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import * as firebase from "firebase";
 import {
   loggingOut,
@@ -29,10 +23,7 @@ import {
 } from "../../../API/FirebaseFunctions";
 import Modal from "react-native-modal";
 import * as ImagePicker from "expo-image-picker";
-import * as Permissions from "expo-permissions";
 import { ScrollView } from "react-native-gesture-handler";
-
-//Map Overlays:
 
 const overlayOff = {
   coordinates: [
@@ -223,7 +214,6 @@ export default class Map extends Component {
     Alert.alert("Log out", "Do you want to log out?", [
       {
         text: "Cancel",
-
         style: "cancel",
       },
       { text: "Yes", onPress: () => loggingOut() },

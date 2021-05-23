@@ -3,7 +3,6 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Switch } from "react-native-paper";
 // import store from "./store/store";
-
 import { Provider } from "react-redux";
 
 console.disableYellowBox = true;
@@ -11,25 +10,16 @@ import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import SplashScreen from "react-native-splash-screen";
 import * as firebase from "firebase";
 import apiKeys from "./constants/ApiKeys";
-import { registerRootComponent } from "expo";
 
 import Splash from "./src/screens/stack/splash";
 import Login from "./src/screens/stack/login";
 import Register from "./src/screens/stack/register";
-import Logout from "./src/screens/stack/logout";
 import LoadingScreen from "./src/screens/stack/LoadingScreen";
 import ForgotPassword from "./src/screens/stack/ForgotPassword";
-import DataUpload from "./src/screens/stack/DataUpload";
-
 import Camera from "./src/screens/stack/camera";
-
 import Map from "./src/screens/bottomTabs/map";
 import Settings from "./src/screens/bottomTabs/settings";
 import Briefing from "./src/screens/bottomTabs/briefing";
-
-import Tab1 from "./src/screens/topTabs/tab1";
-import Tab2 from "./src/screens/topTabs/tab2";
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
@@ -37,7 +27,6 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 
 const Stack = createStackNavigator();
 const MaterialBottomTabs = createMaterialBottomTabNavigator();
-const MaterialTopTabs = createMaterialTopTabNavigator();
 
 const theme = {
   ...DefaultTheme,
@@ -60,12 +49,7 @@ const themeSwitch = () => {
 
 bottomTabNavigator = (props) => {
   return (
-    <MaterialBottomTabs.Navigator
-      initialRouteName="Map"
-      // activeColor="black"
-      // inactiveColor="grey"
-      // barStyle={{ backgroundColor: "white" }}
-    >
+    <MaterialBottomTabs.Navigator initialRouteName="Map">
       <MaterialBottomTabs.Screen
         name="Map"
         component={Map}
@@ -90,17 +74,6 @@ bottomTabNavigator = (props) => {
           ),
         }}
       />
-      {/* <MaterialBottomTabs.Screen
-        name="AppCamera"
-        component={AppCamera}
-        visable={false}
-        options={{
-          tabBarLabel: "Camera",
-          tabBarIcon: ({ theme }) => (
-            <MaterialCommunityIcons name="camera" color={theme} size={26} />
-          ),
-        }}
-      /> */}
       <MaterialBottomTabs.Screen
         name="Settings"
         component={Settings}

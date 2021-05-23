@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions, StatusBar } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 export const styles = StyleSheet.create({
@@ -79,7 +79,7 @@ export const styles = StyleSheet.create({
     color: "grey",
   },
 
-  //Multi component styles
+  //Gerally used component styles
   container: {
     flex: 1,
   },
@@ -274,7 +274,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
   },
-  // briefing page
+  // Briefing page
 
   wrapperCustom: {
     borderRadius: 8,
@@ -345,19 +345,19 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
     marginTop: "5%",
     backgroundColor: "white",
-    // justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
   },
 
   settingsInfo: {
-    borderRadius: 10,
-    width: 400,
+    borderRadius: 5,
+    width: "80%",
+    backgroundColor: "#fafcfc",
     margin: 20,
-    height: 300,
+    height: "80%",
     padding: 40,
     borderColor: "black",
-    borderWidth: 3,
+    borderWidth: 2,
   },
 
   optionRow: {
@@ -369,7 +369,7 @@ export const styles = StyleSheet.create({
   },
   surface: {
     padding: 8,
-    height: 80,
+    height: 120,
     marginTop: 10,
     width: "100%",
     paddingLeft: 20,
@@ -377,6 +377,6 @@ export const styles = StyleSheet.create({
     elevation: 4,
   },
   surfaceText: {
-    fontSize: 20,
+    fontSize: 25,
   },
 });
